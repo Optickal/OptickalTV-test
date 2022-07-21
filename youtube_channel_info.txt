@@ -2,8 +2,14 @@
 ~~ FORMAT: <channel name> | <group name> | <logo> | <tvg-id>
 
 
-Camping Jesolo International |  | https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png |
+Camping Jesolo International | Webcam | https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png |
 https://www.youtube.com/watch?v=W2g6PVsGZ6g
 
-Rheinfall Schaffhausen |  | https://www.bodensee.de/extension/portal-bodensee/var/storage/images/media/bibliothek/ausflugsziele/rheinfall/fruehlingsstimmung-am-rheinfall/510453-1-ger-DE/fruehlingsstimmung-am-rheinfall_front_large.jpg |
+Rheinfall Schaffhausen | Webcam | https://www.bodensee.de/extension/portal-bodensee/var/storage/images/media/bibliothek/ausflugsziele/rheinfall/fruehlingsstimmung-am-rheinfall/510453-1-ger-DE/fruehlingsstimmung-am-rheinfall_front_large.jpg |
 https://www.youtube.com/user/schaffhauserland/live
+
+The Good Life Radio | Radio | https://img.youtube.com/vi/36YnV9STBqc/maxresdefault.jpg |  |
+https://www.youtube.com/watch?v=36YnV9STBqc
+
+Deep House Radio | Radio | https://img.youtube.com/vi/19hKXI1ENrY/maxresdefault.jpg |  |
+https://www.youtube.com/watch?v=19hKXI1ENrY
