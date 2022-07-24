@@ -10,7 +10,9 @@
 
 `https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/youtube.m3u`
 
-Updated m3u links of YouTube live channels, **auto-updated every 3 hours**.
+`https://bit.ly/OptickalMixx`
+
+Updated m3u links of YouTube live channels, **auto-updated every hour**.
 
 
 ### Add more channels
