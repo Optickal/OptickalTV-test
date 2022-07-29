@@ -33,4 +33,4 @@ Do not forget to add a cron job set for every 4 hours(or 5) if you plan to run t
 
 ### Support
 
-🙂 https://www.buymeacoffee.com/benmoose39
+Credits: [**benmoose39**](https://github.com/benmoose39) 🙂
