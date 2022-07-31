@@ -22,12 +22,11 @@ jobs:
         with:
           node-version: '14'
           cache: 'npm'
-      - name: download data from api
+      - name: download data from m3u
         if: steps.files.outputs.any_changed == 'true'
         run: |
           mkdir -p scripts/data
-          curl -L -o scripts/data/blocklist.json https://iptv-org.github.io/api/blocklist.json
-          curl -L -o scripts/data/channels.json https://iptv-org.github.io/api/channels.json
+          curl -L -o main/youtube.m3u https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/youtube.m3u
       - name: validate
         if: steps.files.outputs.any_changed == 'true'
         run: |
