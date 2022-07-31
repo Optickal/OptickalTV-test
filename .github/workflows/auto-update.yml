@@ -1,0 +1,154 @@
+name: auto-update
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0,1 * * *'
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        if: ${{ !env.ACT }}
+        with:
+          node-version: '14'
+          cache: 'npm'
+      - run: npm run api:load
+      - uses: actions/upload-artifact@v2
+        with:
+          name: data
+          path: scripts/data
+      - run: npm install
+      - run: npm run db:create
+      - uses: actions/upload-artifact@v2
+        with:
+          name: database
+          path: scripts/database
+      - run: npm run db:matrix
+        id: create-matrix
+    outputs:
+      matrix: ${{ steps.create-matrix.outputs.matrix }}
+  load:
+    runs-on: ubuntu-latest
+    needs: setup
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+      # matrix:
+      #   cluster_id: [1]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: FedericoCarboni/setup-ffmpeg@v1
+      - uses: actions/setup-node@v2
+        if: ${{ !env.ACT }}
+        with:
+          node-version: '14'
+      - uses: actions/download-artifact@v2
+        with:
+          name: database
+          path: scripts/database
+      - run: npm install
+      - run: npm run cluster:load -- --cluster-id=${{ matrix.cluster_id }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: logs
+          path: scripts/logs
+  update:
+    runs-on: ubuntu-latest
+    needs: load
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: echo "::set-output name=branch_name::$(date +'bot/auto-update-%s')"
+        id: create-branch-name
+      - run: git config user.name 'Github Action UP'
+      - run: git config user.email 'action@github.com'
+      - run: git checkout -b ${{ steps.create-branch-name.outputs.branch_name }}
+      - uses: tibdex/github-app-token@v1
+        if: ${{ !env.ACT }}
+        id: create-app-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+      - uses: actions/setup-node@v2
+        if: ${{ !env.ACT }}
+        with:
+          node-version: '14'
+      - uses: actions/download-artifact@v2
+        with:
+          name: data
+          path: scripts/data
+      - uses: actions/download-artifact@v2
+        with:
+          name: database
+          path: scripts/database
+      - uses: actions/download-artifact@v2
+        with:
+          name: logs
+          path: scripts/logs
+      - run: npm install
+      - run: npm run db:update
+      - uses: actions/upload-artifact@v2
+        with:
+          name: database
+          path: scripts/database
+      - run: npm run playlist:update
+      - run: npm run playlist:generate
+      - run: npm run db:export
+      - run: npm run readme:update
+      - uses: actions/upload-artifact@v2
+        with:
+          name: logs
+          path: scripts/logs
+      - name: Commit Changes
+        if: ${{ !env.ACT }}
+        run: |
+          git add streams/*
+          git commit -m "[Bot] Update /streams"
+          git add README.md
+          git commit -m "[Bot] Update README.md"
+          git status
+          git push -u origin ${{ steps.create-branch-name.outputs.branch_name }}
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        if: ${{ !env.ACT && github.ref == 'refs/heads/master' }}
+        with:
+          branch: gh-pages
+          folder: .gh-pages
+          token: ${{ steps.create-app-token.outputs.token }}
+          git-config-name: Github Actions UP
+          git-config-email: action@github.com
+          commit-message: '[Bot] Deploy to GitHub Pages'
+          clean: false
+      - name: Deploy to 
+        uses: JamesIves/github-pages-deploy-action@v4.2.5
+        if: ${{ !env.ACT && github.ref == 'refs/heads/master' }}
+        with:
+          repository-name: Ka...
+          branch: gh-pages
+          folder: .api
+          token: ${{ steps.create-app-token.outputs.token }}
+          git-config-name: Github Action UP
+          git-config-email: action@github.com
+          commit-message: '[Bot] Deploy to '
+          clean: false
+      - uses: repo-sync/pull-request@v2
+        if: ${{ !env.ACT && github.ref == 'refs/heads/master' }}
+        id: pull-request
+        with:
+          github_token: ${{ steps.create-app-token.outputs.token }}
+          source_branch: ${{ steps.create-branch-name.outputs.branch_name }}
+          destination_branch: 'master'
+          pr_title: '[Bot] Daily update'
+          pr_body: |
+            This pull request is created by [auto-update][1] workflow.
+
+            [1]: https://github.com/Optickal/OptickalTV-test/actions/runs/${{ github.run_id }}
+      - uses: juliangruber/merge-pull-request-action@v1
+        if: ${{ !env.ACT && github.ref == 'refs/heads/master' }}
+        with:
+          github-token: ${{ secrets.PAT }}
+          number: ${{ steps.pull-request.outputs.pr_number }}
+          method: squash
