@@ -34,7 +34,7 @@ jobs:
       - name: config
         run: |
           git config --global user.email "optickal@proton.me"
-          git config --global user.name "Optickal [bot]"
+          git config --global user.name "Optickal"
       - name: Main
         run: |
           pwd
