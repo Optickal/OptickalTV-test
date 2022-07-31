@@ -138,10 +138,14 @@ with open('../youtube_channel_info.txt') as f:
             tvg_logo = line[2].strip()
             tvg_id = line[3].strip()
             print(f'\n#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
-            if line or line.endswith('info.m3u8')
-            print(f'\n#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", [COLOR red] {ch_name} [/COLOR]')
+        if line.endswith('info.m3u8')
+            line = line.split('|')
+            ch_name = line[0].strip()
+            grp_title = line[1].strip().title()
+            tvg_logo = line[2].strip()
+            tvg_id = line[3].strip()
+            print(f'\n#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", Offline - {ch_name}')
         else:
-            print(f'\n#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
             grab(line)
             
 if 'temp.txt' in os.listdir():
