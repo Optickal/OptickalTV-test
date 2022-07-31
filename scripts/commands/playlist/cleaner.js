@@ -11,7 +11,7 @@ program
 const options = program.opts()
 
 async function main() {
-  const files = program.args.length ? program.args : await file.list('streams/*.m3u')
+  const files = program.args.length ? program.args : await file.list('main/*.m3u')
 
   for (const filepath of files) {
     if (!filepath.endsWith('.m3u')) continue
