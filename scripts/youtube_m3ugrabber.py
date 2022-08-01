@@ -135,7 +135,7 @@ now = datetime.now()
  
 # dd/mm/YY H:M:S
 dt_string = now.strftime("%d/%m/%Y %H:%M")
-print("EXTINF:-1 , Stand -", dt_string)	
+print("#EXTINF:-1 , Stand -", dt_string)	
 print("https://")
 print(banner)
 
