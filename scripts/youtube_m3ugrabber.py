@@ -92,7 +92,6 @@ http://streams.80s80s.de/web/mp3-192/streams.80s80s.de/play.m3u
 
 
 from datetime import datetime
-import pandas as pd
 import requests
 import os
 import sys
@@ -131,14 +130,13 @@ def grab(url):
 
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 
-# Get current time in local timezone
-current_time = datetime.now()
-n = 2
-# Add 2 hours to datetime object containing current time
-future_time = current_time + pd.DateOffset(hours=n)
-# Convert datetime object to string in specific format 
-future_time_str = future_time.strftime('%m/%d/%Y %H:%M')
-print('#EXTINF:-1 , Stand -', future_time_str)
+
+
+# datetime object containing current date and time
+now = datetime.now()
+# dd/mm/YY H:M
+dt_string = now.strftime("%d/%m/%Y %H:%M")
+print("#EXTINF:-1 , Stand -", dt_string)
 print("https://")
 print(banner)
 
