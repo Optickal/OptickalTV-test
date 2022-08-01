@@ -19,8 +19,6 @@ Edit `youtube_channel_info.txt` to add your favourite YouTube livestreams
 ### Usage
 Paste this URL: `https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/youtube.m3u` to any player which supports M3U playlists
 
-Do not forget to add a cron job set for every 4 hours(or 5) if you plan to run the script locally.
-
 
 ### Support
 
