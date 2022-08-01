@@ -130,11 +130,11 @@ def grab(url):
 
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 
+
 tz = pytz.timezone('Europe/Berlin')
 berlin_now = datetime.now(tz)
 # datetime object containing current date and time
 now = datetime.now(tz)
- 
 # dd/mm/YY H:M:S
 dt_string = now.strftime("%d/%m/%Y %H:%M")
 print("#EXTINF:-1 , Stand -", dt_string)	
