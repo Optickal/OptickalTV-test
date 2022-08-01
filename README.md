@@ -4,15 +4,12 @@
 [![M3U generator for YouTube](https://github.com/Optickal/OptickalTV-test/actions/workflows/m3u_Generator.yml/badge.svg)](https://github.com/Optickal/OptickalTV-test/actions/workflows/m3u_Generator.yml)
 
 
-[![M3U generator](https://github.com/Optickal/OptickalTV-test/actions/workflows/m3u_Generator.yml/badge.svg?event=workflow_run)](https://github.com/Optickal/OptickalTV-test/actions/workflows/m3u_Generator.yml)
-
-
 
 `https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/youtube.m3u`
 
 `https://bit.ly/OptickalMixx`
 
-Updated m3u links of YouTube live channels, **auto-updated every hour**.
+Updated m3u links of YouTube live channels, **auto-updated every 10 minutes**.
 
 
 ### Add more channels
