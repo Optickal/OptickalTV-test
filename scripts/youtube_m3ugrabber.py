@@ -125,6 +125,17 @@ def grab(url):
 
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 print(banner)
+
+from datetime import datetime
+
+# datetime object containing current date and time
+now = datetime.now()
+ 
+# dd/mm/YY H:M:S
+dt_string = now.strftime("%d/%m/%Y %H:%M")
+print("EXTINF:-1 , Stand -", dt_string)	
+print("https://")
+
 #s = requests.Session()
 with open('../youtube_channel_info.txt') as f:
     for line in f:
