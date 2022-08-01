@@ -92,6 +92,7 @@ http://streams.80s80s.de/web/mp3-192/streams.80s80s.de/play.m3u
 
 
 from datetime import datetime
+import pytz
 import requests
 import os
 import sys
@@ -129,9 +130,10 @@ def grab(url):
 
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 
-
+tz = pytz.timezone('Europe/Berlin')
+berlin_now = datetime.now(tz)
 # datetime object containing current date and time
-now = datetime.now()
+now = datetime.now(tz)
  
 # dd/mm/YY H:M:S
 dt_string = now.strftime("%d/%m/%Y %H:%M")
