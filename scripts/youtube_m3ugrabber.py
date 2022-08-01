@@ -87,11 +87,15 @@ http://playerservices.streamtheworld.com/api/livestream-redirect/SKYRADIO.mp3
 #EXTINF:-1 tvg-name="80s80s Radio" radio="true" tvg-logo="https://static-assets.iamrad.io/80s80s/1648022795461/4c68f9a343fe635641e064a1821bb125.svg",80s80s Radio
 http://streams.80s80s.de/web/mp3-192/streams.80s80s.de/play.m3u
 
+
 '''
 
+
+from datetime import datetime
 import requests
 import os
 import sys
+
 
 windows = False
 if 'win' in sys.platform:
@@ -124,9 +128,7 @@ def grab(url):
     print(f"{link[start : end]}")
 
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
-print(banner)
 
-from datetime import datetime
 
 # datetime object containing current date and time
 now = datetime.now()
@@ -135,6 +137,8 @@ now = datetime.now()
 dt_string = now.strftime("%d/%m/%Y %H:%M")
 print("EXTINF:-1 , Stand -", dt_string)	
 print("https://")
+print(banner)
+
 
 #s = requests.Session()
 with open('../youtube_channel_info.txt') as f:
