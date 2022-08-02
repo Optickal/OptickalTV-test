@@ -23,3 +23,4 @@ Paste this URL: `https://raw.githubusercontent.com/Optickal/OptickalTV-test/main
 ### Support
 
 Credits: [**benmoose39**](https://github.com/benmoose39) 🙂
+![alt text](https://avatars.githubusercontent.com/u/29022864?v=4)
