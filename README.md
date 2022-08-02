@@ -23,10 +23,11 @@ Paste this URL: `https://raw.githubusercontent.com/Optickal/OptickalTV-test/main
 ### Support
 
 Credits: 
-[**                                                                           
+[**benmoose39**](https://github.com/benmoose39) 🙂
+                                                                          
 ,--.                                                        ,----.  ,---.  
 |  |-.  ,---. ,--,--, ,--,--,--. ,---.  ,---.  ,---.  ,---. '.-.  || o   \ 
 | .-. '| .-. :|      \|        || .-. || .-. |(  .-' | .-. :  .' < `..'  | 
 | `-' |\   --.|  ||  ||  |  |  |' '-' '' '-' '.-'  `)\   --./'-'  | .'  /  
  `---'  `----'`--''--'`--`--`--' `---'  `---' `----'  `----'`----'  `--'   
-                                                                           **](https://github.com/benmoose39) 🙂
+                                                                           
