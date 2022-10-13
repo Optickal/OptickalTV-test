@@ -135,10 +135,10 @@ http://streams.80s80s.de/web/mp3-192/streams.80s80s.de/play.m3u
 '''
 
 
-from datetime import datetime
-import requests
-import os
-import sys
+from datetime import datetime, timedelta
+from pytz import timezone
+import pytz
+
 
 print()
 
@@ -181,10 +181,10 @@ print(banner1)
 #print epg
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 # datetime object containing current date and time
-now = datetime.now()
+berlin = timezone('Europe/Berlin')
 # dd/mm/YY H:M
-dt_string = now.strftime("%d/%m/%Y %H:%M")
-print("#EXTINF:-1 , Stand -", dt_string)
+fmt = '%d/%m/%Y %H:%M'
+print("#EXTINF:-1 , Stand -", fmt)
 print("https://")
 
 print(banner2)
