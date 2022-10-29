@@ -176,6 +176,184 @@ def grab(url):
         #response = requests.get(url).text
         if '.m3u8' not in response:
             if windows:
+#! /usr/bin/python3
+
+banner1 = r'''
+#########################################################################
+#      ____            _           _   __  __                           #
+#     |  _ \ _ __ ___ (_) ___  ___| |_|  \/  | ___   ___  ___  ___      #
+#     | |_) | '__/ _ \| |/ _ \/ __| __| |\/| |/ _ \ / _ \/ __|/ _ \     #
+#     |  __/| | | (_) | |  __/ (__| |_| |  | | (_) | (_) \__ \  __/     #
+#     |_|   |_|  \___// |\___|\___|\__|_|  |_|\___/ \___/|___/\___|     #
+#                   |__/                                                #
+#                                  >> https://github.com/benmoose39     #
+#########################################################################
+
+##################################################################################################################################################################
+#     ___           ___           ___                         ___           ___                       ___           ___                                          #
+#     /\__\         /\  \         /\__\                       /\  \         /\  \                     /\__\         /\__\         _____                          #
+#    /:/  /        /::\  \       /:/ _/_         ___         /::\  \       |::\  \       ___         /::|  |       /:/ _/_       /::\  \                         #
+#   /:/  /        /:/\:\  \     /:/ /\  \       /\__\       /:/\:\  \      |:|:\  \     /\__\       /:/:|  |      /:/ /\__\     /:/\:\  \                        #
+#  /:/  /  ___   /:/  \:\  \   /:/ /::\  \     /:/  /      /:/  \:\  \   __|:|\:\  \   /:/__/      /:/|:|  |__   /:/ /:/ _/_   /:/  \:\__\                       #
+# /:/__/  /\__\ /:/__/ \:\__\ /:/_/:/\:\__\   /:/__/      /:/__/ \:\__\ /::::|_\:\__\ /::\  \     /:/ |:| /\__\ /:/_/:/ /\__\ /:/__/ \:|__|                      #
+# \:\  \ /:/  / \:\  \ /:/  / \:\/:/ /:/  /  /::\  \      \:\  \ /:/  / \:\~~\  \/__/ \/\:\  \__  \/__|:|/:/  / \:\/:/ /:/  / \:\  \ /:/  /                      #
+#  \:\  /:/  /   \:\  /:/  /   \::/ /:/  /  /:/\:\  \      \:\  /:/  /   \:\  \        ~~\:\/\__\     |:/:/  /   \::/_/:/  /   \:\  /:/  /                       #
+#   \:\/:/  /     \:\/:/  /     \/_/:/  /   \/__\:\  \      \:\/:/  /     \:\  \          \::/  /     |::/  /     \:\/:/  /     \:\/:/  /                        #
+#    \::/  /       \::/  /        /:/  /         \:\__\      \::/  /       \:\__\         /:/  /      |:/  /       \::/  /       \::/  /                         #
+#     \/__/         \/__/         \/__/           \/__/       \/__/         \/__/         \/__/       |/__/         \/__/         \/__/                          #
+#                                         ___           ___                                   ___           ___           ___                                    #
+#     _____                              /\  \         /\  \                                 /\__\         /|  |         /\  \                                   #
+#    /::\  \         ___                /::\  \       /::\  \       ___         ___         /:/  /        |:|  |        /::\  \                                  #
+#   /:/\:\  \       /|  |              /:/\:\  \     /:/\:\__\     /\__\       /\__\       /:/  /         |:|  |       /:/\:\  \                                 #
+#  /:/ /::\__\     |:|  |             /:/  \:\  \   /:/ /:/  /    /:/  /      /:/__/      /:/  /  ___   __|:|  |      /:/ /::\  \   ___     ___                  #
+# /:/_/:/\:|__|    |:|  |            /:/__/ \:\__\ /:/_/:/  /    /:/__/      /::\  \     /:/__/  /\__\ /\ |:|__|____ /:/_/:/\:\__\ /\  \   /\__\                 #
+# \:\/:/ /:/  /  __|:|__|            \:\  \ /:/  / \:\/:/  /    /::\  \      \/\:\  \__  \:\  \ /:/  / \:\/:::::/__/ \:\/:/  \/__/ \:\  \ /:/  /                 #
+#  \::/_/:/  /  /::::\  \             \:\  /:/  /   \::/__/    /:/\:\  \      ~~\:\/\__\  \:\  /:/  /   \::/~~/~      \::/__/       \:\  /:/  /                  #
+#   \:\/:/  /   ~~~~\:\  \             \:\/:/  /     \:\  \    \/__\:\  \        \::/  /   \:\/:/  /     \:\~~\        \:\  \        \:\/:/  /                   #
+#    \::/  /         \:\__\             \::/  /       \:\__\        \:\__\       /:/  /     \::/  /       \:\__\        \:\__\        \::/  /                    #
+#     \/__/           \/__/              \/__/         \/__/         \/__/       \/__/       \/__/         \/__/         \/__/         \/__/                     #
+#      ___           ___           ___                    ___           ___                                   ___           ___           ___                    #
+#     /\__\         /\  \         /\  \                  /\  \         /\  \                                 /\__\         /|  |         /\  \                   #
+#    /:/ _/_       /::\  \       /::\  \                /::\  \       /::\  \       ___         ___         /:/  /        |:|  |        /::\  \                  #
+#   /:/ /\__\     /:/\:\  \     /:/\:\__\              /:/\:\  \     /:/\:\__\     /\__\       /\__\       /:/  /         |:|  |       /:/\:\  \                 #
+#  /:/ /:/  /    /:/  \:\  \   /:/ /:/  /             /:/  \:\  \   /:/ /:/  /    /:/  /      /:/__/      /:/  /  ___   __|:|  |      /:/ /::\  \   ___     ___  #
+# /:/_/:/  /    /:/__/ \:\__\ /:/_/:/__/___          /:/__/ \:\__\ /:/_/:/  /    /:/__/      /::\  \     /:/__/  /\__\ /\ |:|__|____ /:/_/:/\:\__\ /\  \   /\__\ #
+# \:\/:/  /     \:\  \ /:/  / \:\/:::::/  /          \:\  \ /:/  / \:\/:/  /    /::\  \      \/\:\  \__  \:\  \ /:/  / \:\/:::::/__/ \:\/:/  \/__/ \:\  \ /:/  / #
+#  \::/__/       \:\  /:/  /   \::/~~/~~~~            \:\  /:/  /   \::/__/    /:/\:\  \      ~~\:\/\__\  \:\  /:/  /   \::/~~/~      \::/__/       \:\  /:/  /  #
+#   \:\  \        \:\/:/  /     \:\~~\                 \:\/:/  /     \:\  \    \/__\:\  \        \::/  /   \:\/:/  /     \:\~~\        \:\  \        \:\/:/  /   #
+#    \:\__\        \::/  /       \:\__\                 \::/  /       \:\__\        \:\__\       /:/  /     \::/  /       \:\__\        \:\__\        \::/  /    #
+#     \/__/         \/__/         \/__/                  \/__/         \/__/         \/__/       \/__/       \/__/         \/__/         \/__/         \/__/     #
+#                                                                                                                                                                #
+#                                                                                                                        >> https://github.com/Optickal          #
+##################################################################################################################################################################
+        
+       
+'''
+
+
+
+banner2 = r'''
+#EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
+https://
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png" tvg-id="", [COLOR teal] Camping Jesolo International [/COLOR]
+https://hls.youtb.workers.dev/channel/UCDB_gbIJPzzT7xg__hSfqSw.m3u8
+#EXTINF:-1 tvg-name="KroneHitTv" tvg-id="KHTV" group-title="Radio" tvg-logo="https://play-lh.googleusercontent.com/b3UZEQKoQGGXKAXY_qwijvDVDIEqfqJv-nXP1jN-f71WFVSc4aq8ciIpD0O7BWpgD1s",[COLOR yellow] KroneHit TV [/COLOR]
+https://bitcdn-kronehit.bitmovin.com/v2/hls/chunklist_b3128000.m3u8
+#EXTINF:-1 tvg-id="RTL102.5TV.it" tvg-logo="https://raw.githubusercontent.com/Tapiosinn/tv-logos/master/countries/italy/rtl-1025-it.png" group-title="Radio",RTL 102.5 HD
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist_video.m3u8
+#EXTINF:-1 tvg-id="R101TV.it" tvg-chno="167" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/r101tv.png" group-title="Radio",R101 TV
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(er)/index.m3u8
+#EXTINF:-1 tvg-id="Radio105TV.it" tvg-chno="66" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radio105tv.png" group-title="Radio",Radio 105 TV
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(ec)/index.m3u8
+#EXTINF:-1 tvg-id="DeejayTV.it" tvg-chno="69" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/deejaytv.png" group-title="Radio",Deejay TV
+https://deejay-tv-lh.akamaized.net/i/DeejayTv_1@129866/master.m3u8
+#EXTINF:-1 tvg-id="RadioItaliaTV.it" tvg-chno="70" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radioitaliatv.png" group-title="Radio",RadioItaliaTV
+https://radioitaliatv-lh.akamaihd.net/i/radioitaliatv_1@329645/master.m3u8
+#EXTINF:-1 tvg-id="RadioKissKiss.it" tvg-chno="158" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiokisskisstv.png" group-title="Radio",RADIO KISS KISS TV
+https://58d921499d3d3.streamlock.net/KissKissTV/KissKissTV.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="R101TV.it" tvg-chno="167" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/r101tv.png" group-title="Radio",R101 TV
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(er)/index.m3u8
+#EXTINF:-1 tvg-id="RaiRadio2.it" tvg-chno="203" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/rairadio2visual.png" group-title="Radio",Rai Radio 2 Visual
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://mediapolis.rai.it/relinker/relinkerServlet.htm?cont=5674080
+#EXTINF:-1 tvg-id="RTL102.5News.it" tvg-chno="233" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/rtl1025tv.png" group-title="Radio",RTL 102.5 News
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S38122967/2lyQRIAAGgRR/playlist_video.m3u8
+#EXTINF:-1 tvg-id="VirginRadio.it" tvg-chno="257" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/virginradiotv.png" group-title="Radio",VIRGIN RADIO
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(ew)/index.m3u8
+#EXTINF:-1 tvg-id="RadioFrecciaTV.it" tvg-chno="258" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiofrecciatv.png" group-title="Radio",RADIOFRECCIA
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S3160845/0tuSetc8UFkF/playlist_video.m3u8
+#EXTINF:-1 tvg-id="rds" tvg-chno="265" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/rdssocialtv.png" group-title="Radio",RDS Social TV
+https://stream.rdstv.radio/out/v1/ec85f72b87f04555aa41d616d5be41dc/index.m3u8
+#EXTINF:-1 tvg-id="RadioZeta.it" tvg-chno="266" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiozetatv.png" group-title="Radio",RADIO ZETA
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S9346184/XEx1LqlYbNic/playlist_video.m3u8
+#EXTINF:-1 tvg-id="RadioCapitalTv.it"  tvg-chno="713" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiocapitaltv.png" group-title="Radio",Radio Capital TV
+https://capital_tv-lh.akamaihd.net/i/CapitalTv_1@183098/master.m3u8
+#EXTINF:-1 tvg-id="M2OTv.it" tvg-chno="715" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiom2otv.png" group-title="Radio",M2O TV
+https://m2otv-lh.akamaihd.net/i/m2oTv_1@186074/master.m3u8
+#EXTINF:-1 tvg-id="RadioMontecarlo.it" tvg-chno="772" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiomontecarlotv.png" group-title="Radio",Radio Montecarlo TV
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(bb)/index.m3u8
+#EXTINF:-1 tvg-id="RTVSanMarino.it" tvg-chno="831" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/rtvsanmarino.png" group-title="Radio",RTV San Marino
+https://d2hrvno5bw6tg2.cloudfront.net/smrtv-ch01/_definst_/smil:ch-01.smil/chunklist_b1692000_slita.m3u8
+#EXTINF:-1 tvg-name="Ö3-VisualRadio" tvg-id="oe3.at" group-title="Musik" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/radio/hitradiooe3.png",Ö3-VisualRadio
+https://studiocam-oe3.mdn.ors.at/out/u/studiocam_oe3/q6a/manifest.m3u8
+#EXTINF:-1 tvg-name="SWR3-VisualRadio" tvg-id="swr3.de" group-title="Musik" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/radio/swr3.png",SWR3-VisualRadio
+https://swrswr3vr-hls.akamaized.net/hls/live/2018683/swr3vr/master.m3u8
+#EXTINF:-1 tvg-name="DASDING-VisualRadio" tvg-id="Dasding.de" group-title="Musik" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/radio/dasding.png",DASDING-VisualRadio
+https://swrdasdingvr-hls.akamaized.net/hls/live/2018681/dasdingvr/master.m3u8
+
+
+#EXTINF:-1 tvg-name="Oberjoch Webcam" tvg-id="OJ" group-title="Webcam" tvg-logo="https://i.ibb.co/CPfTkDF/Bergbahnen-Hindelang-Oberjoch.png",[COLOR orange] Oberjoch Webcam Test 1[/COLOR]
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://ch-fra-n16.livespotting.com/vpu/d6se1ryf/edlyww6d_720.m3u8?session=eaebeef6-745e-4e4e-8c94-6cfcb3e24ed0
+#EXTINF:-1 tvg-name="Oberjoch Webcam" tvg-id="OJ" group-title="Webcam" tvg-logo="https://i.ibb.co/CPfTkDF/Bergbahnen-Hindelang-Oberjoch.png",[COLOR orange] Oberjoch Webcam Test 2[/COLOR]
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://ch-fra-n16.livespotting.com/vpu/d6se1ryf/edlyww6d.m3u8?
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://www.damuels-mellau.at/bundles/clientwebsite/damuels_mellau/img/damuels_mellau_logo.png",Mellau Rosenstelle
+https://stream.webcam-livestream.at/live/mellaurossstelle/index.m3u8
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://www.damuels-mellau.at/bundles/clientwebsite/damuels_mellau/img/damuels_mellau_logo.png",Mellau Rosenstelle Berg
+https://stream.webcam-livestream.at/live/rossstelleberg/index.m3u8
+
+
+#EXTINF:-1 group-title="Tomorrowland" tvg-logo="https://w7.pngwing.com/pngs/378/394/png-transparent-2018-tomorrowland-tomorrowworld-music-festival-logo-electronic-dance-music-design-purple-heart-logo.png",ONE WORLD TV #1
+https://live-tml.freecaster.com/tomorrowland/96b89f93-ce21-492f-ab98-b56b84247175/96b89f93-ce21-492f-ab98-b56b84247175.isml/96b89f93-ce21-492f-ab98-b56b84247175-stereo=256000-video=5499968.m3u8
+#EXTINF:-1 group-title="Tomorrowland" tvg-logo="https://w7.pngwing.com/pngs/378/394/png-transparent-2018-tomorrowland-tomorrowworld-music-festival-logo-electronic-dance-music-design-purple-heart-logo.png",ONE WORLD TV #2
+https://live-tml.freecaster.com/tomorrowland/96b8a4bc-bc66-4519-9184-9b5d149d2d14/96b8a4bc-bc66-4519-9184-9b5d149d2d14.isml/96b8a4bc-bc66-4519-9184-9b5d149d2d14-stereo=256000-video=5499968.m3u8
+
+
+
+#EXTINF:-1 tvg-name="Sky Radio 101 FM" radio="true" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/radio/skyradio101fm.png",Sky Radio 101 FM
+http://playerservices.streamtheworld.com/api/livestream-redirect/SKYRADIO.mp3
+#EXTINF:-1 tvg-name="80s80s Radio" radio="true" tvg-logo="https://static-assets.iamrad.io/80s80s/1648022795461/4c68f9a343fe635641e064a1821bb125.svg",80s80s Radio
+http://streams.80s80s.de/web/mp3-192/streams.80s80s.de/play.m3u
+
+
+
+
+
+#EXTINF:-1 group-title="Twitch" tv-logo="https://instagram.fkiv7-1.fna.fbcdn.net/v/t51.2885-19/184761410_264224142070921_752288161223085036_n.jpg?_nc_ht=instagram.fkiv7-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=8QiIHYfZdOIAX9I7k4X&edm=AEF8tYYBAAAA&ccb=7-5&oh=00_AfAVzUp3cNN_CCPVWj-T1uhfWVMKQ1IADi8nvhPmKwFBOw&oe=6361CD48&_nc_sid=a9513d",HoneyPuu Twitch [COLOR orange] 720p/60fps [/COLOR]
+https://video-weaver.fra05.hls.ttvnw.net/v1/playlist/CpgET35JC-96sRgLGorUMAYfdFX44aghZA-oDonFFtjrhjjo5nt999ZUbrqzDQ2w8sjRc_EpDTCcSRcofp_Y644wDI5_rM8bNXT2v5ke04DgUWUY2LGG8aUAbFzaiXfFP_6GVNRaUjPeaOS7OVqcQCcmuLnmhxFDkbtlxTZgze-1XQnDlhWA_I63HtBmZ1VmoASVy3gb-K0ZvmTk1AUMw6d4R0P5v7R_w_qZEz4t666uJQEcp4AGoCDCB5VE0fOE3IVDLVSlQUedq-iWQV8KYX5Wz5cZt784knuaBj2kC_-_DapB52V9KxWJYXO38J9uFBdpd_3v4Va72NC5iNVBIW5SN8_bNFGGgVNAdJjsZqxVWZU8uAGyw5iRr0-vrMTWOByj50zWhq8VzEbGtBG2mv4vFJ-Big_LgML9yWhna2dtJbmRXCQL44Sowfk70bSeXWdqk9D7myRDeUZYcljmeJXB_Jl76UOzWuHELSVTIQgdK7aZa6AgdfgIbvaDfdloLkTQPbw21991ikwGuU1Of5Mp2E5-f16jRZ9gSYofs6U2kNtd1rjwSyafNbkq_M8Rt7vrSMGloGNZUyr2ZJvmwSZ3g5OTMmpQhy_UUJusKLxaEvh3WQbfwLQX2o24qV6MUAXmd-CqjfYmueDoJRVaMv1wdZCnlAEKsKtT6NyJsfNCuYMUk0af1rvWrIf8yy4PQwUEbi3nqaMeVwMaDO-HI2Bv3X1Sz-gxzyABKglldS13ZXN0LTIwggU.m3u8
+
+#EXTINF:-1 group-title="Twitch" tv-logo="",unsympathisch_TV Twitch [COLOR orange] 720p/60fps [/COLOR]
+https://video-weaver.fra06.hls.ttvnw.net/v1/playlist/Cq4EM8Zdk9P59pcjncfvoDxGEHeGqIfZoyjMjZU-nnAa-TtCHyQKsPztK7mpEyYqSHi5-K3Fhz04rNvHtgV64YAOYd4QV22w1VJmEQeltAaGB1zrhg5jPpry_DMvuojkhVJnnQJqGC0BxpBy1XwXvYuz4nXpg6njndy1Xh5LUikd-cswBgX_mtUfiV256XqaqLLbx-qFHpopBj7M5fCJZs2eYBLR_uNvsxgNFtlpPsdHqqx_54KGY7_TuGfb8m-nhiNg-qqa4cx5T2v3pmuYw14QXbLC6zKUk6Jx2pZSmiPoX2GrJXBdHiBq4B-_OAVfgusI5AnG3euOAo6jZWGLIth4ixIuGheCb1DKc-Au1HovOxpqoIpFliVfUs9tZFGml-fvE9GhyWKFiMEyojswe93FB1QriyJ8qrfXcFqmVcUxFaKj5t0bFIRc7Uej7ES01JOOhHLU6ekv00a7EbYL2kZOuFaB_ytvVrLc-53_aJkCCHX9HU_-GP0mpYSsrZoINT4MIgYnao_YrxkXiw-g2cwyyFHYMY98Wz_ixnFALPKcWIAaUNeDsb0Crwh4K2cJM8M9qCQHQCDg8UunXrsOulhB1Fpu73Sq1aHnEHYupA_UnNNrC5PTf5o-gj78VNscU7q7YgjLRo6CKXQ6Q9z1boEXQ9b_uLweaSQje5VTFjrHj90SvldViAo1HRDAjio5k6FIm9RqkJNtl8QjylKAgWEZBA_Ei4-j9X8QhXoKA9xFGgxwhT3XRH4QKFW3DckgASoJZXUtd2VzdC0yMIIF.m3u8
+
+#EXTINF:-1 group-title="Twitch" tv-logo="",BastiGHG Twitch [COLOR orange] 720p/60fps [/COLOR]
+https://video-weaver.fra05.hls.ttvnw.net/v1/playlist/CpYEZphzoefKPkXcPfabH_QBEzUvyVWJv0O6UF2Ji5o2AL_2VCbrlnto4ycPpKHyK55dFMRgne5aemx_ZTrQSTbNGVdJs0j9gzmt4hWJgdb_tNLI7WKhLlaE1wdRjQ1Sjja2PiLCT5Y0TTSRulFEqhs6uUzlDrn_4PznUgiD_KwlKcwwh1C_4EGmMCUkx_XjHut6eQ1WDEjtQiibPIvC4r69Tk7ijE6qGlz8Qi_kkEMaiwXmQsFO-cCEZ0dFCX5zVW6pHGh9ELYwygZyJJB4gCfkIsqvC75Sa8LtkEqcAgDngkuJOnqMXl70rDjh8XNGjQtPSs5CAfnbGeZWtuHhbyj-fUfc4p-dAN9RnTUNYe7XtZnQFAiL-un8MV0eUx6iwvCI54DkeAKsfeNZWsihr-t6DpODOlNckLRM7UEP0AhgZXICgjJzfmesBYBxlNiACd9sTG2YFgrN3KSVKEd0-XsYAWs9UN5drfpUaphJikQxBknhdadtyIkKZiMlsuQtSZ328TAauSinnJKQTQVYQvQmeAUHAlrYYVQKUgDkDTIES629mukUg1SUJiqUpch4MfyQSqRXXyQK9CQQi-q4MsE-UYDpqEZsA-ZTgusA4p9_40nFPtAreF5aVRs38romt9smsFPRns5EY71RJqiwTlJS5nAaWnyOHAyt5upkLsulgocujENoC7hLXDmwoVZzbVfBxfzrN2BTGgyydgHHRNyBSpF5QIIgASoJZXUtd2VzdC0yMIIF.m3u8
+
+
+
+
+
+'''
+
+
+
+
+
+from datetime import datetime
+import requests
+import os
+import sys
+
+print()
+
+
+
+
+windows = False
+if 'win' in sys.platform:
+    windows = True
+
+def grab(url):
+    response = requests.get(url, timeout=15).text
+    if '.m3u8' not in response:
+        #response = requests.get(url).text
+        if '.m3u8' not in response:
+            if windows:
                 print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
                 return
             #os.system(f'wget {url} -O temp.txt')
@@ -205,8 +383,7 @@ print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 now = datetime.now()
 # dd/mm/YY H:M
 dt_string = now.strftime("%d/%m/%Y %H:%M")
-result_dt = dt_string + timedelta(hours=2)
-print("#EXTINF:-1 , Stand -", result_dt)
+print("#EXTINF:-1 , Stand -", dt_string)
 print("https://")
 
 print(banner2)
