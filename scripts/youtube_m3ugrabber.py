@@ -156,7 +156,7 @@ https://video-weaver.fra05.hls.ttvnw.net/v1/playlist/CpYEZphzoefKPkXcPfabH_QBEzU
 
 
 
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import os
 import sys
@@ -205,7 +205,8 @@ print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 now = datetime.now()
 # dd/mm/YY H:M
 dt_string = now.strftime("%d/%m/%Y %H:%M")
-print("#EXTINF:-1 , Stand -", dt_string)
+result_dt = dt_string + timedelta(hours=2)
+print("#EXTINF:-1 , Stand -", result_dt)
 print("https://")
 
 print(banner2)
