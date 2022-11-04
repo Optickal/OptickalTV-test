@@ -1,5 +1,4 @@
 #! /usr/bin/python3
-
 banner1 = r'''
 #########################################################################
 #      ____            _           _   __  __                           #
@@ -48,11 +47,7 @@ banner1 = r'''
 #                                                                                                                                                                #
 #                                                                                                                        >> https://github.com/Optickal          #
 ##################################################################################################################################################################
-        
-       
 '''
-
-
 
 banner2 = r'''
 #EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
@@ -145,9 +140,6 @@ https://video-weaver.fra05.hls.ttvnw.net/v1/playlist/CpYEjXTQOrLwwl5T7tsuhhKdak0
 
 #EXTINF:-1 group-title="Twitch" tvg-logo="",unsympathisch_TV Twitch [COLOR orange] 720p/60fps [/COLOR]
 https://video-weaver.prg03.hls.ttvnw.net/v1/playlist/CpMEc_ZjPyec0IpmtvoPH3LiNLuDPsltIGIPeY2TqoIwTbLwau2XC4m08MrrTzbLBUtWj4532vEJe-vK4KjusZ29bqc_KB4IgBsuoenfTXkHhC_7NRwnIbQQRzrTubbNvRyLqBjcBvmx10JUXWRunu4y5u3z9eV66j6C2KeLjZ1CkmUWHN2cvqtA-mxVtlvujtErUJu77wVIAayUUZE3K2DpoIwa66Ev15_m9rLtSTaJ6eNlt3J4yApIMgCdU7HdVaj8sz1faD9NF5GNaIWjK-I6VJ-WC58DcMMrGIyzADWQymVKWf2xaN0xAhuFGbsA5P7N3yhHuYwn85UPaZ2VwNgoitH7fck3WJiXK5nxWHYu74vHNxi0bsDeihqQPhWXKYK89YwJbfXrasAh1AXvF3dngjstAcqFesCaEQKWAzLDfZkgQUqh6wzhjZwJxZ_mb9-C6DAf_1gAziLzy85kZTTOLMfEgon5fCuTqcbcUZG65mTY5ucmmQQKgHGOvNgk_eDrblwTPrIRpck197hPa0dhgu61sQB69yvWXNIc9DQJzj9qNthchHHn5G1AuxIQxgGB-9NQUPs5bYQXaxdqFQ1K99Ve_KKxneHn_nQm7iy0njKVKfp2D8bMktWrTlpVjeKJDAN-imfXZF1ioP-zv5IRxxuiwCusBOjMsGON9jVpuAr_mVerltc_VQD1EOb_5MNBA1_YGgxKlUydKO98bB6mem8gASoJZXUtd2VzdC0yMIcF.m3u8
-
-
-
 
 '''
 
