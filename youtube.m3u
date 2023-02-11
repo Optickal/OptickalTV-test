@@ -49,7 +49,7 @@
 ##################################################################################################################################################################
 
 #EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"
-#EXTINF:-1 , Stand - 11/02/2023 06:49
+#EXTINF:-1 , Stand - 11/02/2023 06:59
 https://
 
 #EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
@@ -146,16 +146,16 @@ https://video-weaver.prg03.hls.ttvnw.net/v1/playlist/CpMEc_ZjPyec0IpmtvoPH3LiNLu
 
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png" tvg-id="", Camping Jesolo International
-https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676119740/ei/XDrnY5WuGsL-kgbZnaGoDQ/ip/20.172.40.176/id/jRM2sZI2k-A.3/source/yt_live_broadcast/requiressl/yes/tx/24451288/txs/24451286%2C24451287%2C24451288%2C24451289/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRAIgbfD9mKWICBaVZSmvCSdqQsk-xmNks1Es9RXmnEPWdO8CIEggseJ0g2rFsHVtg_vvYs0AaZRiD6EVJhU5yu-B_AuR/file/index.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676120359/ei/xzznY_H9BsqdkwaVv6iICg/ip/138.91.71.16/id/jRM2sZI2k-A.3/source/yt_live_broadcast/requiressl/yes/tx/24452303/txs/24452300%2C24452301%2C24452302%2C24452303/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRQIgNLoEVMTfBZr-jKgeKKhlNktwWoFG1RESu2yGFxozoXkCIQCKCXq4M4Vz1npS4QcJOToLpAd0Qe5NRgkKNMJ2ENh0pA%3D%3D/file/index.m3u8
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.bodensee.de/extension/portal-bodensee/var/storage/images/media/bibliothek/ausflugsziele/rheinfall/fruehlingsstimmung-am-rheinfall/510453-1-ger-DE/fruehlingsstimmung-am-rheinfall_front_large.jpg" tvg-id="", Rheinfall Schaffhausen
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/36YnV9STBqc/maxresdefault.jpg" tvg-id="", The Good Life Radio
-https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676120360/ei/xzznY9jFOo2_kwaDx5zgDg/ip/138.91.71.16/id/36YnV9STBqc.9/source/yt_live_broadcast/requiressl/yes/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRAIgJq2zScFIM9hHJawfpEFpTsN7ypWWWOZfsVuvqpuWUhkCIF0rTt9K9wZg6JhO0uK0Ksy-i5z0Y_90IEbvxlQzccIf/file/index.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/19hKXI1ENrY/maxresdefault.jpg" tvg-id="", Deep House Radio
-https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676120360/ei/yDznY7_5HtWikgaOkrTADA/ip/138.91.71.16/id/19hKXI1ENrY.4/source/yt_live_broadcast/requiressl/yes/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRQIgEVVjtAKUglwciSsBODxvBeLjyNKAVHnpjZ-J3xe0FDgCIQDwJs8m8Q8Qf5uSBwE24mzoNJi96NAlKySFpzwKe0Tujw%3D%3D/file/index.m3u8
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://img.youtube.com/vi/AGCX-AKRxRg/maxresdefault.jpg" tvg-id="", Bodensee Webcam
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
@@ -164,10 +164,10 @@ https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://glassolutions.at/sites/glassolutions.eu/files/styles/photo_gallery_style/public/2019-01/TKTS_1.jpg" tvg-id="", New York - Time Square Webcam
-https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676120361/ei/yTznY-2tL4iXkwaH3Z_4Cw/ip/138.91.71.16/id/1-iS7LArMPA.3/source/yt_live_broadcast/requiressl/yes/tx/24438951/txs/24438945%2C24438946%2C24438947%2C24438948%2C24438949%2C24438950%2C24438951/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRgIhAIPzocr0hgdEkQD40kY6_iaEjT5R8NY03e7JiuBHpvURAiEAmkptiSLkHx9ODQ9ixjvSzfUmV0jKQLpgN9vaxMZWH30%3D/file/index.m3u8
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://img.youtube.com/vi/vvOjJoSEFM0/maxresdefault.jpg" tvg-id="", LA - Venice Beach - V Hotel
-https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676120362/ei/yjznY7GZDY6LkgaKib2ACQ/ip/138.91.71.16/id/vvOjJoSEFM0.6/source/yt_live_broadcast/requiressl/yes/tx/24438929/txs/24438928%2C24438929%2C24438930%2C24438931%2C24438932%2C24438933%2C24438934/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRAIgYcJ8qORQLcSQMdIG2JvRo6IcwXSn9YVjYteAKucR5sACIGD6RkBFkAdnN7s6SddzWh1gAnlOis02WbwsQjVANi22/file/index.m3u8
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://img.youtube.com/vi/JZt7FTJmMk4/maxresdefault.jpg" tvg-id="", Stuttgart Webcam
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
@@ -179,7 +179,7 @@ https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/ym5JzePPWCo/maxresdefault.jpg" tvg-id="", Trap Flow 2 - Popmusik, EDM & Tanzmusik
-https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676120365/ei/zTznY5KsMOP-kgbD84eAAw/ip/138.91.71.16/id/ym5JzePPWCo.3/source/yt_live_broadcast/requiressl/yes/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRAIgJjXlNvpxik2cCb3G4gVNJl_xQ2pZBLbvaJlU9NZqiz8CIFBzdFsy4OUlzoaw1IaDHvSg0JY0jEwGxlIOa3GIiGYv/file/index.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/6Qq2OMFh8Pc/maxresdefault.jpg" tvg-id="", Trap Nation Radio
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
@@ -188,4 +188,4 @@ https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://yt3.ggpht.com/ytc/AMLnZu9r8j-7Y5baAiRIB8H85EDlFeyDr97phSHZkbP8iHo=s1024-c-k-c0x00ffffff-no-rj" tvg-id="", A State Of Trance Radio
-https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676119752/ei/aDrnY6XlH9e2kwbHiqG4Dw/ip/20.172.40.176/id/5lMmnfVylEE.6/source/yt_live_broadcast/requiressl/yes/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRQIgXPmzMM5dsV4bELTMSpw0P5b5bqnwPlPQH5eBKC84AnUCIQDrEZIiX9WGD9RbDQZuBLTYlKKuklA8F6meJTT6NbYPFg%3D%3D/file/index.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1676120368/ei/zzznY46ePLyBsfIPw-eW2As/ip/138.91.71.16/id/5lMmnfVylEE.6/source/yt_live_broadcast/requiressl/yes/tx/24416441/txs/24416436%2C24416437%2C24416438%2C24416439%2C24416440%2C24416441%2C24416442/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AOq0QJ8wRQIgW21FhPr2onbqEs9K7X0BY8SihVuJrhNmmFHFBhQIM5ICIQDfByWTlwjM0sZsP_JOhzvXd6Uq57BcRpXiYInASRL3fw%3D%3D/file/index.m3u8
