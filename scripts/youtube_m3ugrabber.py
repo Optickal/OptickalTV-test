@@ -128,8 +128,8 @@ http://playerservices.streamtheworld.com/api/livestream-redirect/SKYRADIO.mp3
 #EXTINF:-1 tvg-name="80s80s Radio" radio="true" tvg-logo="https://static-assets.iamrad.io/80s80s/1648022795461/4c68f9a343fe635641e064a1821bb125.svg",80s80s Radio
 http://streams.80s80s.de/web/mp3-192/streams.80s80s.de/play.m3u
 
-
-
+#EXTINF:-1 group-title="TV", ARD HD
+https://mcdn.daserste.de/daserste/de/master.m3u8
 
 
 #EXTINF:-1 group-title="Twitch" tvg-logo="https://scontent-lax3-1.cdninstagram.com/v/t51.2885-15/184761410_264224142070921_752288161223085036_n.jpg?stp=dst-jpg_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=8ae9d6&_nc_ohc=zW3BMrFzKisAX9vSca4&_nc_oc=AQlrjHT1QsIxjNOr5MMqwMhpzyPvecdUufkLR7GwV-r80-ayyfqlmIF7tzZwiyiYVD4&_nc_ht=scontent-lax3-1.cdninstagram.com&oh=00_AfA_VEoVr9bvrz_VpMGlww7sTeHxtrvQaegpdSXhVSELjg&oe=636CDA19",HoneyPuu Twitch [COLOR orange] 720p/60fps [/COLOR]
