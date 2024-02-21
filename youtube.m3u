@@ -49,7 +49,7 @@
 ##################################################################################################################################################################
 
 #EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"
-#EXTINF:-1 , Stand - 21/02/2024 04:30
+#EXTINF:-1 , Stand - 21/02/2024 04:45
 https://
 
 #EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
@@ -146,13 +146,13 @@ https://video-weaver.prg03.hls.ttvnw.net/v1/playlist/CpMEc_ZjPyec0IpmtvoPH3LiNLu
 
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png" tvg-id="", Camping Jesolo International
-https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1708511430/ei/ZnzVZcnMDMq8_9EPwJSj-Ao/ip/74.249.13.128/id/jRM2sZI2k-A.3/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/spc/UWF9f5tHiHx0TVYU6I6t7javNOyF6sT6Gd8g6TfrLXTuygc/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cspc%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AJfQdSswRQIgFv4FsKq0gnDelqPTyffAHolxyOrNCzh03l7i_jwXAp0CIQDwNJ1qxFD7_hkiX2_Y8jUxXLfu_GyYBtdrXlv_ThIPzw%3D%3D/file/index.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1708512328/ei/6H_VZZKWK83B_9EPoaab4AU/ip/20.97.189.17/id/jRM2sZI2k-A.3/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/spc/UWF9f23x_8GbFvEemFESwHjEy3_qptsQira0_dM0Q4j1XoU/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cspc%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AJfQdSswRgIhAK6mMRuYC2MgQBFCjovqZAoq61z8kYoDs6FPhRntV4BBAiEAmbM2DIWbOLndKrgGuarfGzohfelnLZpCO9TjwbvISjU%3D/file/index.m3u8
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.bodensee.de/extension/portal-bodensee/var/storage/images/media/bibliothek/ausflugsziele/rheinfall/fruehlingsstimmung-am-rheinfall/510453-1-ger-DE/fruehlingsstimmung-am-rheinfall_front_large.jpg" tvg-id="", Rheinfall Schaffhausen
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/36YnV9STBqc/maxresdefault.jpg" tvg-id="", The Good Life Radio
-https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1708511430/ei/ZnzVZaPCN7qG_9EPtv-f0AE/ip/74.249.13.128/id/36YnV9STBqc.11/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/spc/UWF9f013-syoYSfJcR2vJbMZaTooxrrwl1hrml-9MpJ7q1k/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cspc%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AJfQdSswRgIhALUkoYmCO7q0HQRsOyyeMn9_czq1wnHW5NjO0AgThBQaAiEApvvwvFRt4zPXGG_V73Ja18_DKGD7TFkCnRB5W3Lifr0%3D/file/index.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1708512329/ei/6X_VZffAG6ii_9EPov2PwAg/ip/20.97.189.17/id/36YnV9STBqc.11/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/spc/UWF9fzC2rOERLQgmzie2rzTM_Nim9YPobt5FOEjIFcia0Zs/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cspc%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AJfQdSswRQIgazpvxIOnNTWnc-VKtD8Gp314i3dtBf3WwjmSl7gZiHcCIQCYQI0jBT_pMB10HHfoiAgOTNZNTvpcmKqeSTjxBF_pIA%3D%3D/file/index.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/19hKXI1ENrY/maxresdefault.jpg" tvg-id="", Deep House Radio
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
@@ -188,4 +188,4 @@ https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://yt3.ggpht.com/ytc/AMLnZu9r8j-7Y5baAiRIB8H85EDlFeyDr97phSHZkbP8iHo=s1024-c-k-c0x00ffffff-no-rj" tvg-id="", A State Of Trance Radio
-https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1708511437/ei/bXzVZdbaA6fA_9EPgYKjqAg/ip/74.249.13.128/id/NGsjwNsXE0w.1/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/spc/UWF9f-8DAezluVgxnUoDlos2KbEGi_firfFgcyixFmi3YmYBHc4vd5fWVQ/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cspc%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AJfQdSswRgIhAKAFYtHO8VrT5kUD5hc0AXzJrD4Eh_vsTN_qhg9eoxxIAiEAr7EUU2__gUcLEIeaUWHvGIPWkCKtRQaBmFLrtZoK6qo%3D/file/index.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1708512335/ei/73_VZdX7Heep_9EPjuCIuAk/ip/20.97.189.17/id/NGsjwNsXE0w.1/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/spc/UWF9fwpgo-vsUBXoCTxbuwT1yYk4g7YISUC16vmBpq87p3g/vprv/1/go/1/pacing/0/nvgoi/1/keepalive/yes/fexp/24007246/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cspc%2Cvprv%2Cgo%2Citag%2Cplaylist_type/sig/AJfQdSswRAIgWdmUk3sU2NC-bw5mYPmt_lfkVqP2ow-NhW1SFFf6BgMCIAUw4ynRzWMPB4-4ZzI1Jq4bv-F39Wzhr1BXxswOzbjV/file/index.m3u8
