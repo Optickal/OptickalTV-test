@@ -49,7 +49,7 @@
 ##################################################################################################################################################################
 
 #EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"
-#EXTINF:-1 , Stand - 12/05/2024 06:45
+#EXTINF:-1 , Stand - 12/05/2024 06:56
 https://
 
 #EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
@@ -146,13 +146,13 @@ https://video-weaver.prg03.hls.ttvnw.net/v1/playlist/CpMEc_ZjPyec0IpmtvoPH3LiNLu
 
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png" tvg-id="", Camping Jesolo International
-https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1715518564/ei/BGhAZuOdGfKBsfIPzoqW4Ac/ip/13.88.170.225/id/zpAx1l3bDew.1/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/tx/51066118/txs/51066116%2C51066117%2C51066118%2C51066119%2C51066120%2C51066121/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRAIgBZM6sMVjZNEb415nXJlp5nFgcdrJcpBSc3-Z9Ux6uGMCIGH3yznDkgreGiZ9dXtYNy6BrCEqi53p9NYBEfoTkMcZ/file/index.m3u8
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.bodensee.de/extension/portal-bodensee/var/storage/images/media/bibliothek/ausflugsziele/rheinfall/fruehlingsstimmung-am-rheinfall/510453-1-ger-DE/fruehlingsstimmung-am-rheinfall_front_large.jpg" tvg-id="", Rheinfall Schaffhausen
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/36YnV9STBqc/maxresdefault.jpg" tvg-id="", The Good Life Radio
-https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1715517934/ei/jmVAZs-TDP6FkucP2qmcoAM/ip/20.161.77.193/id/36YnV9STBqc.11/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/tx/51066116/txs/51066116%2C51066117%2C51066118%2C51066119%2C51066120%2C51066121/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRgIhAOzeD8OMZVHgKllljrbJ1iddyIxDUX2juqpUg3gFWabBAiEAwnaEAMRTsF98F0xNP1UWNOtT6lIFZon2qUi8ysz81Sc%3D/file/index.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1715518565/ei/BWhAZuCZF9L1sfIPiY6a4AY/ip/13.88.170.225/id/36YnV9STBqc.11/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/tx/51066118/txs/51066116%2C51066117%2C51066118%2C51066119%2C51066120%2C51066121/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRQIgCItjEp3fL7IuZ0TWvYqtzh2lvDBetoyx3DRaPoqfP58CIQDIVbuxhMFjgaMLiMkEpGJOIHrazDXMcOxq6BSbWo6flw%3D%3D/file/index.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/19hKXI1ENrY/maxresdefault.jpg" tvg-id="", Deep House Radio
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
@@ -188,4 +188,4 @@ https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://yt3.ggpht.com/ytc/AMLnZu9r8j-7Y5baAiRIB8H85EDlFeyDr97phSHZkbP8iHo=s1024-c-k-c0x00ffffff-no-rj" tvg-id="", A State Of Trance Radio
-https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1715517940/ei/lGVAZt7aK-yIkucP4LWS-Aw/ip/20.161.77.193/id/NGsjwNsXE0w.1/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/tx/51066116/txs/51066116%2C51066117%2C51066118%2C51066119%2C51066120%2C51066121/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRQIhAPO5EUinG02LLfFH7EaSEgAc8_pcB-TnKBTDmDwm0_y9AiAkeKG_r84Tdn3cuvfm286h4BHzEcFf0X1pA7AoCLF0Rw%3D%3D/file/index.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1715518573/ei/DWhAZpz6AZX2sfIPuK6b-A0/ip/13.88.170.225/id/NGsjwNsXE0w.1/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/tx/51066118/txs/51066116%2C51066117%2C51066118%2C51066119%2C51066120%2C51066121/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRQIhANox4korORPmCtkGvde8h3sW81ITY-Vx6HBXD0_GA9fsAiB8ouQeTNpfbnBKE5bBpvLmQ3tnRuofVgsbt2Lrqxo2dQ%3D%3D/file/index.m3u8
