@@ -141,6 +141,9 @@ https://video-weaver.fra05.hls.ttvnw.net/v1/playlist/CpUEnslHXAdmCEgblSYBSuedA26
 #EXTINF:-1 group-title="Twitch" tvg-logo="",unsympathisch_TV Twitch [COLOR orange] 720p/60fps [/COLOR]
 https://video-weaver.prg03.hls.ttvnw.net/v1/playlist/CpMEc_ZjPyec0IpmtvoPH3LiNLuDPsltIGIPeY2TqoIwTbLwau2XC4m08MrrTzbLBUtWj4532vEJe-vK4KjusZ29bqc_KB4IgBsuoenfTXkHhC_7NRwnIbQQRzrTubbNvRyLqBjcBvmx10JUXWRunu4y5u3z9eV66j6C2KeLjZ1CkmUWHN2cvqtA-mxVtlvujtErUJu77wVIAayUUZE3K2DpoIwa66Ev15_m9rLtSTaJ6eNlt3J4yApIMgCdU7HdVaj8sz1faD9NF5GNaIWjK-I6VJ-WC58DcMMrGIyzADWQymVKWf2xaN0xAhuFGbsA5P7N3yhHuYwn85UPaZ2VwNgoitH7fck3WJiXK5nxWHYu74vHNxi0bsDeihqQPhWXKYK89YwJbfXrasAh1AXvF3dngjstAcqFesCaEQKWAzLDfZkgQUqh6wzhjZwJxZ_mb9-C6DAf_1gAziLzy85kZTTOLMfEgon5fCuTqcbcUZG65mTY5ucmmQQKgHGOvNgk_eDrblwTPrIRpck197hPa0dhgu61sQB69yvWXNIc9DQJzj9qNthchHHn5G1AuxIQxgGB-9NQUPs5bYQXaxdqFQ1K99Ve_KKxneHn_nQm7iy0njKVKfp2D8bMktWrTlpVjeKJDAN-imfXZF1ioP-zv5IRxxuiwCusBOjMsGON9jVpuAr_mVerltc_VQD1EOb_5MNBA1_YGgxKlUydKO98bB6mem8gASoJZXUtd2VzdC0yMIcF.m3u8
 
+#EXTINF:-1 group-title="Facebook" tvg-logo="https://images.app.goo.gl/wib2zsrrurqb3oDn9",Airpower 2024 Facebook
+https://www.facebook.com/video/playback/playlist.m3u8?v=2268751570142407&a=0
+
 '''
 
 
