@@ -49,7 +49,7 @@
 ##################################################################################################################################################################
 
 #EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"
-#EXTINF:-1 , Stand - 28/01/2025 08:43
+#EXTINF:-1 , Stand - 28/01/2025 08:55
 https://
 
 #EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
@@ -155,10 +155,10 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.bodensee.de/extension/portal-bodensee/var/storage/images/media/bibliothek/ausflugsziele/rheinfall/fruehlingsstimmung-am-rheinfall/510453-1-ger-DE/fruehlingsstimmung-am-rheinfall_front_large.jpg" tvg-id="", Rheinfall Schaffhausen
-https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1738076129/ei/gZuYZ_2zNKi-sfIPzoS2-QE/ip/52.234.42.185/id/UCgLr29bxO8.2/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/tx/51371269/txs/51371269%2C51371270%2C51371271/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/bui/AY2Et-NP5RZoxQ3wgi0UuV5_sTmB-qvBOQ_tFWCQDk514HSamARuNtSTxyYw7Rm9cK8VLX8bYSfGMqt8/spc/9kzgDVll8kQMlUOkFeudDjm-2g_z6DimgFSx6ND29PbLvG_yjvkkZqdbQX9uxFSd_zaO1vY/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/fexp/51326932%2C51353498%2C51355912%2C51371294/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cbui%2Cspc%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRQIhAIP2MC7Mwpr8Ig7NAP1vSFB5OBLY1GeL2TJcG09ffqRWAiBW_XAoOcQvIDxHHEDzX6GfmuMUs-j7DsU8duo_mXUIuA%3D%3D/file/index.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/36YnV9STBqc/maxresdefault.jpg" tvg-id="", The Good Life Radio
-https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+https://manifest.googlevideo.com/api/manifest/hls_variant/expire/1738076130/ei/gpuYZ5GZGY3asfIP0oK86Qc/ip/52.234.42.185/id/36YnV9STBqc.12/source/yt_live_broadcast/requiressl/yes/xpc/EgVo2aDSNQ%3D%3D/tx/51369433/txs/51369426%2C51369427%2C51369428%2C51369429%2C51369430%2C51369431%2C51369432%2C51369433%2C51369434/hfr/1/playlist_duration/30/manifest_duration/30/maudio/1/bui/AY2Et-PDu_27jPgF3t9-yoiN3VPYZiLuEpqxHDviKUCc3iXq6PXXj-SU2iQx3NRFIRfqh_KRZbIzjQk-/spc/9kzgDRPmsw9FD1pOjlop05fW2lIwQch9vxGukaj99O_ANCCI4ku68G2OVF6edABQy5Gt_50/vprv/1/go/1/rqh/5/pacing/0/nvgoi/1/keepalive/yes/fexp/51326932%2C51353498%2C51355912%2C51371294/dover/11/itag/0/playlist_type/DVR/sparams/expire%2Cei%2Cip%2Cid%2Csource%2Crequiressl%2Cxpc%2Ctx%2Ctxs%2Chfr%2Cplaylist_duration%2Cmanifest_duration%2Cmaudio%2Cbui%2Cspc%2Cvprv%2Cgo%2Crqh%2Citag%2Cplaylist_type/sig/AJfQdSswRAIgNfNm5p63YPWXKYFYvks_0laDobM13uoJsmKQkb4aHrMCIC14yOiEjJnSYNVCtTf-jMczOP-RuzvMWuroIb-zWfSS/file/index.m3u8
 
 #EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/19hKXI1ENrY/maxresdefault.jpg" tvg-id="", Deep House Radio
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
