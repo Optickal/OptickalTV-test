@@ -160,75 +160,77 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import requests
+from bs4 import BeautifulSoup
 import os
 import sys
+import re
 
-print()
+def get_german_time():
+    berlin = ZoneInfo("Europe/Berlin")
+    return datetime.now(berlin).strftime("%d/%m/%Y %H:%M")
 
+def find_m3u8_links(html):
+    return list(set(re.findall(r'https?://[^\'"\s]+\.m3u8[^\'"\s]*', html)))
 
+def grab_webcam(url, ch_name, grp_title, tvg_logo, tvg_id):
+    try:
+        headers = {"User-Agent": "Mozilla/5.0"}
+        resp = requests.get(url, headers=headers, timeout=15)
+        soup = BeautifulSoup(resp.text, "html.parser")
+        m3u8_links = find_m3u8_links(resp.text)
 
+        if not m3u8_links:
+            raise Exception("Keine .m3u8 gefunden")
 
-windows = False
-if 'win' in sys.platform:
-    windows = True
+        for idx, m3u8 in enumerate(m3u8_links, start=1):
+            suffix = f" (Webcam {idx})" if len(m3u8_links) > 1 else ""
+            print(f'#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}{suffix}')
+            print(m3u8)
 
-def grab(url):
-    response = requests.get(url, timeout=15).text
-    if '.m3u8' not in response:
-        #response = requests.get(url).text
-        if '.m3u8' not in response:
-            if windows:
-                print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
-                return
-            #os.system(f'wget {url} -O temp.txt')
-            os.system(f'curl "{url}" > temp.txt')
-            response = ''.join(open('temp.txt').readlines())
-            if '.m3u8' not in response:
-                print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
-                return
-    end = response.find('.m3u8') + 5
-    tuner = 100
-    while True:
-        if 'https://' in response[end-tuner : end]:
-            link = response[end-tuner : end]
-            start = link.find('https://')
-            end = link.find('.m3u8') + 5
-            break
-        else:
-            tuner += 5
-    print(f"{link[start : end]}")
+    except Exception:
+        print(f'#EXTINF:-1 group-title="Offline" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
+        print("https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8")
+
+def main():
+    print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
+    print(f'#EXTINF:-1 , Stand - {get_german_time()}')
+    print("https://")
     
-    
-print(banner1)
+    if not os.path.exists("youtube_channel_info.txt"):
+        print("FEHLER: 'youtube_channel_info.txt' nicht gefunden.")
+        return
 
-#print epg
-print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
-# datetime object containing current date and time
-now = datetime.now()
-# dd/mm/YY H:M
-dt_string = now.strftime("%d/%m/%Y %H:%M")
-print("#EXTINF:-1 , Stand -", dt_string)
-print("https://")
+    with open("youtube_channel_info.txt", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip() and not line.startswith('~~')]
 
-print(banner2)
+    entries = []
+    i = 0
+    while i < len(lines):
+        if not lines[i].startswith("http"):
+            parts = lines[i].split("|")
+            if len(parts) < 4:
+                i += 1
+                continue
+            ch_name = parts[0].strip()
+            grp_title = parts[1].strip()
+            tvg_logo = parts[2].strip()
+            tvg_id = parts[3].strip()
+            i += 1
+            if i < len(lines) and lines[i].startswith("http"):
+                url = lines[i].strip()
+                entries.append((ch_name, grp_title, tvg_logo, tvg_id, url))
+        i += 1
 
-#s = requests.Session()
-with open('../youtube_channel_info.txt') as f:
-    for line in f:
-        line = line.strip()
-        if not line or line.startswith('~~'):
-            continue
-        if not line.startswith('https:'):
-            line = line.split('|')
-            ch_name = line[0].strip()
-            grp_title = line[1].strip().title()
-            tvg_logo = line[2].strip()
-            tvg_id = line[3].strip()
-            print(f'\n#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
+    entries.sort(key=lambda x: x[0].lower())  # Sortierung nach Channel-Namen
+
+    for ch_name, grp_title, tvg_logo, tvg_id, url in entries:
+        if any(domain in url for domain in ["skylinewebcams.com", "marinadivenezia.it", "webcamtaxi.com"]):
+            grab_webcam(url, ch_name, grp_title, tvg_logo, tvg_id)
         else:
-            grab(line)
-            
-if 'temp.txt' in os.listdir():
-    os.system('rm temp.txt')
-    os.system('rm watch*')
+            print(f'#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
+            print(url)
+
+if __name__ == "__main__":
+    main()
