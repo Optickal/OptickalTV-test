@@ -159,78 +159,105 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 
+import requests, os, re, sys
+from bs4 import BeautifulSoup
 from datetime import datetime
 from zoneinfo import ZoneInfo
-import requests
-from bs4 import BeautifulSoup
-import os
-import sys
-import re
+
+OFFLINE_URL = "https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8"
+OFFLINE_GROUP = "Offline"
 
 def get_german_time():
-    berlin = ZoneInfo("Europe/Berlin")
-    return datetime.now(berlin).strftime("%d/%m/%Y %H:%M")
+    return datetime.now(ZoneInfo("Europe/Berlin")).strftime("%d/%m/%Y %H:%M")
 
 def find_m3u8_links(html):
-    return list(set(re.findall(r'https?://[^\'"\s]+\.m3u8[^\'"\s]*', html)))
+    return list(set(re.findall(r'https?://[^\'" >]+\.m3u8[^\'" <]*', html)))
 
-def grab_webcam(url, ch_name, grp_title, tvg_logo, tvg_id):
+def fetch_url(url):
+    headers = {"User-Agent": "Mozilla/5.0"}
     try:
-        headers = {"User-Agent": "Mozilla/5.0"}
-        resp = requests.get(url, headers=headers, timeout=15)
-        soup = BeautifulSoup(resp.text, "html.parser")
-        m3u8_links = find_m3u8_links(resp.text)
-
-        if not m3u8_links:
-            raise Exception("Keine .m3u8 gefunden")
-
-        for idx, m3u8 in enumerate(m3u8_links, start=1):
-            suffix = f" (Webcam {idx})" if len(m3u8_links) > 1 else ""
-            print(f'#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}{suffix}')
-            print(m3u8)
-
+        return requests.get(url, headers=headers, timeout=10).text
     except Exception:
-        print(f'#EXTINF:-1 group-title="Offline" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
-        print("https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8")
+        return ""
+
+def extract_streams(url):
+    html = fetch_url(url)
+    if not html and not 'win' in sys.platform:
+        os.system(f'curl -L "{url}" > temp.txt')
+        if os.path.exists("temp.txt"):
+            with open("temp.txt", "r", encoding="utf-8", errors="ignore") as f:
+                html = f.read()
+    return find_m3u8_links(html)
+
+def process_entry(name, group, logo, tvg_id, url):
+    results = []
+    if any(x in url for x in ["skylinewebcams.com", "webcamtaxi.com", "marinadivenezia.it"]):
+        m3u8s = extract_streams(url)
+        if not m3u8s:
+            results.append((OFFLINE_GROUP, logo, tvg_id, name, OFFLINE_URL))
+        else:
+            for m3u8 in m3u8s:
+                results.append((group, logo, tvg_id, name, m3u8))
+    elif "youtube.com" in url:
+        results.append((group, logo, tvg_id, name, url))  # YouTube-Live-URL direkt verwenden
+    else:
+        results.append((OFFLINE_GROUP, logo, tvg_id, name, OFFLINE_URL))
+    return results
 
 def main():
-    print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
-    print(f'#EXTINF:-1 , Stand - {get_german_time()}')
-    print("https://")
-    
-    if not os.path.exists("youtube_channel_info.txt"):
-        print("FEHLER: 'youtube_channel_info.txt' nicht gefunden.")
-        return
+    input_file = "../youtube_channel_info.txt"
+    with open(input_file, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
 
-    with open("youtube_channel_info.txt", encoding="utf-8") as f:
-        lines = [line.strip() for line in f if line.strip() and not line.startswith('~~')]
-
+    # Trennung in Blöcke: (name, group, logo, tvg_id, url)
     entries = []
     i = 0
     while i < len(lines):
-        if not lines[i].startswith("http"):
-            parts = lines[i].split("|")
-            if len(parts) < 4:
-                i += 1
-                continue
-            ch_name = parts[0].strip()
-            grp_title = parts[1].strip()
-            tvg_logo = parts[2].strip()
-            tvg_id = parts[3].strip()
+        if lines[i].startswith("~~") or not lines[i]:
             i += 1
-            if i < len(lines) and lines[i].startswith("http"):
-                url = lines[i].strip()
-                entries.append((ch_name, grp_title, tvg_logo, tvg_id, url))
+            continue
+        if "|" in lines[i] and not lines[i].startswith("http"):
+            try:
+                name, group, logo, tvg_id = [p.strip() for p in lines[i].split("|")]
+                url = lines[i + 1].strip()
+                entries.append((name, group, logo, tvg_id, url))
+                i += 1  # zusätzlich zur Schleife
+            except Exception:
+                pass
         i += 1
 
-    entries.sort(key=lambda x: x[0].lower())  # Sortierung nach Channel-Namen
+    youtube_section = []
+    webcam_section = []
 
-    for ch_name, grp_title, tvg_logo, tvg_id, url in entries:
-        if any(domain in url for domain in ["skylinewebcams.com", "marinadivenezia.it", "webcamtaxi.com"]):
-            grab_webcam(url, ch_name, grp_title, tvg_logo, tvg_id)
-        else:
-            print(f'#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
-            print(url)
+    for name, group, logo, tvg_id, url in entries:
+        processed = process_entry(name, group, logo, tvg_id, url)
+        for entry in processed:
+            target_list = youtube_section if "youtube.com" in url else webcam_section
+            target_list.append(entry)
+
+    # Ausgabe starten
+    print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
+    print(f"#EXTINF:-1 , Stand - {get_german_time()}")
+    print("https://\n")
+
+    # Andere Webcams
+    if webcam_section:
+        print("----- Andere Webcams -----")
+        for group, logo, tvg_id, name, link in webcam_section:
+            print(f'#EXTINF:-1 group-title="{group}" tvg-logo="{logo}" tvg-id="{tvg_id}", {name}')
+            print(link)
+            print()
+
+    # YouTube Kanäle
+    if youtube_section:
+        print("----- YouTube -----")
+        for group, logo, tvg_id, name, link in youtube_section:
+            print(f'#EXTINF:-1 group-title="{group}" tvg-logo="{logo}" tvg-id="{tvg_id}", {name}')
+            print(link)
+            print()
+
+    if os.path.exists("temp.txt"):
+        os.remove("temp.txt")
 
 if __name__ == "__main__":
     main()
