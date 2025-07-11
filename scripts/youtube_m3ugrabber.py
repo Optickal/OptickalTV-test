@@ -159,105 +159,68 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 
-import requests, os, re, sys
-from bs4 import BeautifulSoup
 from datetime import datetime
-from zoneinfo import ZoneInfo
+import requests
+import os
+import pytz
 
+# === Konfiguration ===
 OFFLINE_URL = "https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8"
-OFFLINE_GROUP = "Offline"
+INPUT_FILE = "youtube_channel_info.txt"
+OUTPUT_FILE = "streams/youtube.m3u"
+M3U_HEADER = '#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"'
 
-def get_german_time():
-    return datetime.now(ZoneInfo("Europe/Berlin")).strftime("%d/%m/%Y %H:%M")
+# === Uhrzeit DE (Sommer-/Winterzeit korrekt) ===
+def get_time_germany():
+    tz = pytz.timezone("Europe/Berlin")
+    return datetime.now(tz).strftime("%d/%m/%Y %H:%M")
 
-def find_m3u8_links(html):
-    return list(set(re.findall(r'https?://[^\'" >]+\.m3u8[^\'" <]*', html)))
-
-def fetch_url(url):
-    headers = {"User-Agent": "Mozilla/5.0"}
+# === m3u8-URL extrahieren ===
+def grab_m3u8(url):
     try:
-        return requests.get(url, headers=headers, timeout=10).text
-    except Exception:
-        return ""
+        response = requests.get(url, timeout=15).text
+    except:
+        return None
+    if '.m3u8' not in response:
+        return None
+    end = response.find('.m3u8') + 5
+    for tuner in range(100, 500, 10):
+        snippet = response[end - tuner:end]
+        if 'https://' in snippet:
+            start = snippet.find('https://')
+            end_pos = snippet.find('.m3u8') + 5
+            return snippet[start:end_pos]
+    return None
 
-def extract_streams(url):
-    html = fetch_url(url)
-    if not html and not 'win' in sys.platform:
-        os.system(f'curl -L "{url}" > temp.txt')
-        if os.path.exists("temp.txt"):
-            with open("temp.txt", "r", encoding="utf-8", errors="ignore") as f:
-                html = f.read()
-    return find_m3u8_links(html)
+# === Inhalte laden & verarbeiten ===
+entries_youtube, entries_other = [], []
 
-def process_entry(name, group, logo, tvg_id, url):
-    results = []
-    if any(x in url for x in ["skylinewebcams.com", "webcamtaxi.com", "marinadivenezia.it"]):
-        m3u8s = extract_streams(url)
-        if not m3u8s:
-            results.append((OFFLINE_GROUP, logo, tvg_id, name, OFFLINE_URL))
-        else:
-            for m3u8 in m3u8s:
-                results.append((group, logo, tvg_id, name, m3u8))
-    elif "youtube.com" in url:
-        results.append((group, logo, tvg_id, name, url))  # YouTube-Live-URL direkt verwenden
-    else:
-        results.append((OFFLINE_GROUP, logo, tvg_id, name, OFFLINE_URL))
-    return results
-
-def main():
-    input_file = "../youtube_channel_info.txt"
-    with open(input_file, "r", encoding="utf-8") as f:
-        lines = [line.strip() for line in f if line.strip()]
-
-    # Trennung in Blöcke: (name, group, logo, tvg_id, url)
-    entries = []
-    i = 0
-    while i < len(lines):
-        if lines[i].startswith("~~") or not lines[i]:
-            i += 1
+with open(INPUT_FILE, encoding='utf-8') as f:
+    for line in f:
+        line = line.strip()
+        if not line or line.startswith("~~"):
             continue
-        if "|" in lines[i] and not lines[i].startswith("http"):
-            try:
-                name, group, logo, tvg_id = [p.strip() for p in lines[i].split("|")]
-                url = lines[i + 1].strip()
-                entries.append((name, group, logo, tvg_id, url))
-                i += 1  # zusätzlich zur Schleife
-            except Exception:
-                pass
-        i += 1
+        if not line.startswith("http"):
+            ch_name, grp_title, tvg_logo, tvg_id = [x.strip() for x in line.split("|")]
+            continue
+        url = line
+        m3u8_url = grab_m3u8(url)
+        group = grp_title if m3u8_url else "Offline"
+        stream = m3u8_url if m3u8_url else OFFLINE_URL
+        entry = f'#EXTINF:-1 group-title="{group}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}\n{stream}\n'
+        if grp_title.lower() == "youtube":
+            entries_youtube.append(entry)
+        else:
+            entries_other.append(entry)
 
-    youtube_section = []
-    webcam_section = []
+# === .m3u schreiben ===
+os.makedirs("streams", exist_ok=True)
+with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    f.write(f"{M3U_HEADER}\n")
+    f.write(f'#EXTINF:-1 , Stand - {get_time_germany()}\nhttps://\n\n')
+    f.write("----- YouTube -----\n")
+    f.writelines(entries_youtube)
+    f.write("\n----- Andere -----\n")
+    f.writelines(entries_other)
 
-    for name, group, logo, tvg_id, url in entries:
-        processed = process_entry(name, group, logo, tvg_id, url)
-        for entry in processed:
-            target_list = youtube_section if "youtube.com" in url else webcam_section
-            target_list.append(entry)
-
-    # Ausgabe starten
-    print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
-    print(f"#EXTINF:-1 , Stand - {get_german_time()}")
-    print("https://\n")
-
-    # Andere Webcams
-    if webcam_section:
-        print("----- Andere Webcams -----")
-        for group, logo, tvg_id, name, link in webcam_section:
-            print(f'#EXTINF:-1 group-title="{group}" tvg-logo="{logo}" tvg-id="{tvg_id}", {name}')
-            print(link)
-            print()
-
-    # YouTube Kanäle
-    if youtube_section:
-        print("----- YouTube -----")
-        for group, logo, tvg_id, name, link in youtube_section:
-            print(f'#EXTINF:-1 group-title="{group}" tvg-logo="{logo}" tvg-id="{tvg_id}", {name}')
-            print(link)
-            print()
-
-    if os.path.exists("temp.txt"):
-        os.remove("temp.txt")
-
-if __name__ == "__main__":
-    main()
+print(f"{OUTPUT_FILE} erfolgreich generiert.")
