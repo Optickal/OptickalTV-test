@@ -160,165 +160,62 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 import os
-import re
-import requests
-from datetime import datetime
-try:
-    from zoneinfo import ZoneInfo  # Python 3.9+
-except ImportError:
-    from backports.zoneinfo import ZoneInfo  # falls notwendig
+import streamlink
 
-import yt_dlp
-import subprocess
+INPUT_FILE = "youtube_channel_info.txt"
+OUTPUT_FILE = "youtube.m3u"
 
-INFO_PATH = "youtube_channel_info.txt"
-M3U_PATH = "youtube.m3u"
-STREAM_TIMEOUT = 8
-
-GROUP_ORDER = ["YouTube", "Twitch", "Webcam", "Radio", "Skyline", "Tomorrowland", "Other", "Offline"]
-FALLBACK_URL = "https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8"
-
-def log(msg):
-    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
-
-def get_german_time():
-    now = datetime.now(ZoneInfo("Europe/Berlin"))
-    return now.strftime('%H:%M Uhr')
-
-def extract_stream_url_youtube(url):
-    ydl_opts = {
-        'quiet': True,
-        'skip_download': True,
-        'format': 'best[protocol^=m3u8]/best',
-        'forceurl': True,
-    }
-    try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            info = ydl.extract_info(url, download=False)
-            for f in info.get('formats', []):
-                if f.get('protocol') == 'm3u8_native' or f.get('ext') == 'm3u8':
-                    return f.get('url')
-            return info.get('url')
-    except Exception as e:
-        log(f"YouTube error for {url}: {e}")
+def parse_line(line):
+    # Überspringe Kommentarzeilen oder leere Zeilen
+    if line.startswith("~~") or not line.strip():
         return None
+    parts = line.strip().split("|")
+    if len(parts) < 4:
+        return None
+    return {
+        "name": parts[0].strip(),
+        "group": parts[1].strip(),
+        "logo": parts[2].strip(),
+        "url": parts[3].strip()
+    }
 
-def extract_stream_url_twitch(url):
+def get_stream_url(url):
     try:
-        proc = subprocess.run(
-            ['streamlink', '--stream-url', url, 'best'],
-            capture_output=True, text=True, timeout=STREAM_TIMEOUT
-        )
-        if proc.returncode == 0:
-            return proc.stdout.strip()
-        else:
-            log(f"Streamlink returned error for {url}")
+        streams = streamlink.streams(url)
+        if streams and "best" in streams:
+            return streams["best"].url
     except Exception as e:
-        log(f"Twitch error for {url}: {e}")
+        print(f"Fehler bei {url}: {e}")
     return None
 
-def extract_stream_url_skyline(url):
-    try:
-        resp = requests.get(url, timeout=STREAM_TIMEOUT)
-        if resp.status_code != 200:
-            return None
-        match = re.search(r'(https?://[^\s\'"]+\.m3u8)', resp.text)
-        if match:
-            return match.group(1)
-    except Exception as e:
-        log(f"Skyline error for {url}: {e}")
-    return None
+def generate_m3u():
+    if not os.path.exists(INPUT_FILE):
+        print(f"{INPUT_FILE} nicht gefunden.")
+        return
 
-def parse_info_file():
-    channels = []
-    with open(INFO_PATH, "r", encoding="utf-8") as f:
+    entries = []
+    with open(INPUT_FILE, "r", encoding="utf-8") as f:
         for line in f:
-            line = line.strip()
-            if not line or line.startswith("~~"):
-                continue
-            parts = [x.strip() for x in line.split("|") if x.strip()]
-            if len(parts) < 4:
-                continue
-            name, group, logo, stream = parts[:4]
-            options = {}
-            for part in parts[4:]:
-                if "=" in part:
-                    key, value = part.split("=", 1)
-                    options[key.strip().upper()] = value.strip()
-            channels.append({
-                "name": name,
-                "group": group,
-                "logo": logo,
-                "url": stream,
-                "options": options
-            })
-    return channels
+            item = parse_line(line)
+            if item:
+                stream_url = get_stream_url(item["url"])
+                if stream_url:
+                    entries.append({
+                        "name": item["name"],
+                        "group": item["group"],
+                        "logo": item["logo"],
+                        "stream": stream_url
+                    })
+                else:
+                    print(f"Kein aktiver Stream für: {item['name']}")
 
-def get_stream_link(entry):
-    url = entry["url"]
-    options = entry["options"]
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write("#EXTM3U\n")
+        for entry in entries:
+            f.write(f'#EXTINF:-1 tvg-logo="{entry["logo"]}" group-title="{entry["group"]}",{entry["name"]}\n')
+            f.write(f"{entry['stream']}\n")
 
-    if "ZWICKT" in options:
-        return extract_stream_url_twitch(options["ZWICKT"])
-
-    if "youtube.com" in url or "youtu.be" in url:
-        return extract_stream_url_youtube(url)
-
-    if "twitch.tv" in url:
-        return extract_stream_url_twitch(url)
-
-    if "skylinewebcams.com" in url:
-        return extract_stream_url_skyline(url)
-
-    return url  # für statische Links
-
-def write_m3u(groups):
-    with open(M3U_PATH, "w", encoding="utf-8") as f:
-        f.write('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"\n')
-        f.write(f'#EXTINF:-1 Stand - {get_german_time()}\n')
-        f.write("https:///clock\n\n")
-
-        for group_name in groups:
-            entries = groups[group_name]
-            if not entries:
-                continue
-            f.write(f"# ---- {group_name} ----\n")
-            for entry in entries:
-                name = entry['name']
-                logo = entry['logo']
-                group = entry['group']
-                stream = entry['stream']
-                if stream:
-                    f.write(f'#EXTINF:-1 tvg-id="{name}" tvg-logo="{logo}" group-title="{group}",{name}\n')
-                    f.write(f"{stream}\n")
-            f.write("\n")
-
-def main():
-    channels = parse_info_file()
-    grouped = {grp: [] for grp in GROUP_ORDER}
-
-    log(f"Lese {len(channels)} Einträge aus info-Datei...")
-
-    for entry in channels:
-        name = entry['name']
-        group = entry['group']
-        stream = get_stream_link(entry)
-
-        if not stream:
-            log(f"Kein Stream gefunden für {name}, setze auf OFFLINE")
-            stream = FALLBACK_URL
-            group = "Offline"
-
-        entry['stream'] = stream
-        entry['group'] = group
-
-        if group not in grouped:
-            grouped["Other"].append(entry)
-        else:
-            grouped[group].append(entry)
-
-    write_m3u(grouped)
-    log(f"Generierte {M3U_PATH} erfolgreich.")
+    print(f"{len(entries)} Einträge erfolgreich in {OUTPUT_FILE} geschrieben.")
 
 if __name__ == "__main__":
-    main()
+    generate_m3u()
