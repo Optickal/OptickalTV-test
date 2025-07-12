@@ -158,64 +158,90 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 
-
-# youtube_m3ugrabber.py
 import os
 
-INPUT_FILE = "youtube_channel_info.txt"
+# Mapping für bekannte Webseiten-URLs zu echten m3u8-Streams
+URL_MAPPING = {
+    "https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html": "https://streaming.skylinewebcams.com/jesolo/stream.m3u8",
+    "https://www.marinadivenezia.it/de/live-cam": "https://streaming.skylinewebcams.com/marinadivenezia/stream.m3u8",
+    # Falls du weitere URLs kennst, ergänze sie hier
+}
+
+# Pfade zur Eingabe- und Ausgabedatei
+INFO_FILE = "youtube_channel_info.txt"
 OUTPUT_FILE = "youtube.m3u"
 
-def parse_line(line):
-    # Zeilenformat:
-    # Kanalname | Gruppe | Logo | URL | optionale Felder
-    parts = [p.strip() for p in line.split('|')]
-    if len(parts) < 4:
-        return None
-    name, group, logo, url = parts[0], parts[1], parts[2], parts[3]
-    return {
-        "name": name,
-        "group": group,
-        "logo": logo,
-        "url": url
-    }
 
-def generate_m3u_entry(channel):
-    # Beispiel:
-    # #EXTINF:-1 tvg-logo="LOGO_URL" group-title="GRUPPE",KANALNAME
-    # STREAM_URL
-    extinf = f'#EXTINF:-1 tvg-logo="{channel["logo"]}" group-title="{channel["group"]}",{channel["name"]}'
-    return f"{extinf}\n{channel['url']}"
+def correct_url(url):
+    """
+    Ersetzt ggf. Webseiten-URLs mit echten m3u8-Stream-URLs.
+    """
+    return URL_MAPPING.get(url.strip(), url.strip())
 
-def main():
-    if not os.path.exists(INPUT_FILE):
-        print(f"Input file '{INPUT_FILE}' nicht gefunden!")
-        return
 
-    with open(INPUT_FILE, "r", encoding="utf-8") as f:
+def parse_info_file(filepath):
+    """
+    Liest die Info-Datei ein und gibt eine Liste von Channel-Dictionaries zurück.
+    """
+    channels = []
+    with open(filepath, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
-    # Erste zwei Zeilen ignorieren, falls Kommentarzeilen
-    # Oder alle Zeilen, die mit "~~" oder leer sind überspringen
-    channels = []
     for line in lines:
         line = line.strip()
-        if not line or line.startswith("~~"):
-            continue
-        parsed = parse_line(line)
-        if parsed:
-            channels.append(parsed)
+        if not line or line.startswith("~~") or line.startswith("#"):
+            continue  # Kommentare und leere Zeilen überspringen
 
-    if not channels:
-        print("Keine gültigen Kanäle gefunden.")
+        parts = [part.strip() for part in line.split("|")]
+        if len(parts) < 4:
+            print(f"[WARNUNG] Ungültige Zeile wird übersprungen: {line}")
+            continue
+
+        name, group, logo, url = parts[:4]
+        url = correct_url(url)
+        channels.append({
+            "name": name,
+            "group": group,
+            "logo": logo,
+            "url": url
+        })
+
+    return channels
+
+
+def generate_m3u(channels):
+    """
+    Erzeugt den M3U-Text aus der Channel-Liste.
+    """
+    m3u_lines = ["#EXTM3U"]
+
+    for ch in channels:
+        entry = (
+            f'#EXTINF:-1 tvg-logo="{ch["logo"]}" group-title="{ch["group"]}",{ch["name"]}\n'
+            f'{ch["url"]}'
+        )
+        m3u_lines.append(entry)
+
+    return "\n".join(m3u_lines)
+
+
+def main():
+    print("[INFO] Starte Generierung der M3U-Datei...")
+
+    if not os.path.exists(INFO_FILE):
+        print(f"[FEHLER] Datei '{INFO_FILE}' nicht gefunden.")
         return
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("#EXTM3U\n")
-        for ch in channels:
-            entry = generate_m3u_entry(ch)
-            f.write(entry + "\n")
+    channels = parse_info_file(INFO_FILE)
+    m3u_content = generate_m3u(channels)
 
-    print(f"{len(channels)} Kanäle in '{OUTPUT_FILE}' geschrieben.")
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(m3u_content)
+
+    print(f"[OK] Datei '{OUTPUT_FILE}' wurde erfolgreich erstellt mit {len(channels)} Einträgen.")
+
 
 if __name__ == "__main__":
     main()
+
+
