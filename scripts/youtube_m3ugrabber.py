@@ -160,58 +160,75 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 import os
+import re
 import requests
+from bs4 import BeautifulSoup
 
 INPUT_FILE = "youtube_channel_info.txt"
 OUTPUT_FILE = "youtube.m3u"
-API_ENDPOINT = "https://pwn.sh/api/getstream?url="
 
 def parse_line(line):
     if line.startswith("~~") or not line.strip():
         return None
-    parts = line.strip().split("|")
+    parts = [p.strip() for p in line.strip().split("|")]
     if len(parts) < 4:
         return None
-    return {
-        "name": parts[0].strip(),
-        "group": parts[1].strip(),
-        "logo": parts[2].strip(),
-        "url": parts[3].strip()
-    }
+    return {"name": parts[0], "group": parts[1], "logo": parts[2], "url": parts[3]}
 
-def get_stream_url(url):
+def get_skyline_stream(webcam_page_url):
+    print(f"🔍 Scanne: {webcam_page_url}")
     try:
-        resp = requests.get(API_ENDPOINT + requests.utils.quote(url), timeout=10)
-        data = resp.json()
-        if data.get("ok") and data.get("stream_url"):
-            return data["stream_url"]
+        res = requests.get(webcam_page_url, timeout=10)
+        soup = BeautifulSoup(res.text, 'html.parser')
+        iframe = soup.find("iframe")
+        if not iframe:
+            print("  ❌ Kein iframe gefunden.")
+            return None
+        iframe_src = iframe.get("src")
+        if not iframe_src.startswith("http"):
+            iframe_src = "https:" + iframe_src
+
+        # Hole iframe-Inhalt
+        iframe_html = requests.get(iframe_src, timeout=10).text
+
+        # Suche .m3u8-Link mit Auth-Token
+        m3u8_match = re.search(r'(https://[^"]+\.m3u8\?a=[^"&]+)', iframe_html)
+        if m3u8_match:
+            stream_url = m3u8_match.group(1)
+            print(f"  ✅ Stream gefunden: {stream_url}")
+            return stream_url
+        else:
+            print("  ❌ Kein Stream gefunden.")
+            return None
     except Exception as e:
-        print(f"API error for {url}: {e}")
-    return None
+        print(f"  ❌ Fehler beim Abrufen: {e}")
+        return None
 
 def generate_m3u():
     if not os.path.exists(INPUT_FILE):
-        print(f"{INPUT_FILE} nicht gefunden.")
+        print(f"❌ Datei '{INPUT_FILE}' nicht gefunden.")
         return
 
     entries = []
-    with open(INPUT_FILE, "r", encoding="utf-8") as f:
+    with open(INPUT_FILE, encoding="utf-8") as f:
         for line in f:
-            item = parse_line(line)
-            if not item: continue
-            print(f"🔍 Prüfe: {item['name']}")
-            stream = get_stream_url(item["url"])
+            data = parse_line(line)
+            if not data:
+                continue
+            if "skylinewebcams.com" not in data["url"]:
+                continue
+            stream = get_skyline_stream(data["url"])
             if stream:
-                print(f"✅ OK: {stream}")
-                entries.append({**item, "stream": stream})
-            else:
-                print(f"❌ Kein Stream für {item['name']}")
+                data["stream"] = stream
+                entries.append(data)
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("#EXTM3U\n")
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as out:
+        out.write("#EXTM3U\n")
         for e in entries:
-            f.write(f'#EXTINF:-1 tvg-logo="{e["logo"]}" group-title="{e["group"]}",{e["name"]}\n{e["stream"]}\n')
-    print(f"\n🚀 Fertig! {len(entries)} Einträge in '{OUTPUT_FILE}'.")
-    
+            out.write(f'#EXTINF:-1 tvg-logo="{e["logo"]}" group-title="{e["group"]}",{e["name"]}\n')
+            out.write(e["stream"] + "\n")
+
+    print(f"\n✅ Fertig. {len(entries)} Streams in '{OUTPUT_FILE}' geschrieben.")
+
 if __name__ == "__main__":
     generate_m3u()
