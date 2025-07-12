@@ -175,6 +175,9 @@ GROUP_ORDER = ["YouTube", "Twitch", "Webcam", "Radio", "Skyline", "Tomorrowland"
 def log(msg):
     print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
+def get_german_time():
+    return datetime.now().strftime('%H:%M Uhr')
+
 def extract_stream_url_youtube(url):
     try:
         yt = YouTube(url)
@@ -240,7 +243,11 @@ def get_stream_link(entry):
 
 def write_m3u(groups):
     with open(M3U_PATH, "w", encoding="utf-8") as f:
-        f.write("#EXTM3U\n\n")
+        # Header und Uhrzeit-Block
+        f.write('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"\n')
+        f.write(f'#EXTINF:-1 Stand - {get_german_time()}\n')
+        f.write("https:///clock\n\n")
+
         for group_name in groups:
             entries = groups[group_name]
             if not entries:
