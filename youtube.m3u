@@ -1,16 +1,1 @@
-#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"
-#EXTINF:-1 Stand - 15:57 Uhr
-https:///clock
-
-# ---- Twitch ----
-
-# ---- Webcam ----
-
-# ---- Radio ----
-
-# ---- Tomorrowland ----
-
-# ---- Other ----
-#EXTINF:-1 tvg-id="Jesolo Strand Live" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f8/Jesolostemma.png" group-title="Webcams Italien",Jesolo Strand Live
-https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html
-
+#EXTM3U
