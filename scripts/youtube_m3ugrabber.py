@@ -159,79 +159,63 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 
-import asyncio
-import re
-from playwright.async_api import async_playwright
-from pathlib import Path
+# youtube_m3ugrabber.py
+import os
 
 INPUT_FILE = "youtube_channel_info.txt"
 OUTPUT_FILE = "youtube.m3u"
 
-async def get_m3u8_url_dynamic(url):
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
-        page = await browser.new_page()
+def parse_line(line):
+    # Zeilenformat:
+    # Kanalname | Gruppe | Logo | URL | optionale Felder
+    parts = [p.strip() for p in line.split('|')]
+    if len(parts) < 4:
+        return None
+    name, group, logo, url = parts[0], parts[1], parts[2], parts[3]
+    return {
+        "name": name,
+        "group": group,
+        "logo": logo,
+        "url": url
+    }
 
-        found_url = None
+def generate_m3u_entry(channel):
+    # Beispiel:
+    # #EXTINF:-1 tvg-logo="LOGO_URL" group-title="GRUPPE",KANALNAME
+    # STREAM_URL
+    extinf = f'#EXTINF:-1 tvg-logo="{channel["logo"]}" group-title="{channel["group"]}",{channel["name"]}'
+    return f"{extinf}\n{channel['url']}"
 
-        async def handle_response(response):
-            nonlocal found_url
-            if ".m3u8" in response.url and response.status == 200:
-                if re.search(r'\.m3u8(\?|$)', response.url):
-                    found_url = response.url
-
-        page.on("response", handle_response)
-
-        try:
-            await page.goto(url, timeout=60000)
-            await asyncio.sleep(10)
-        except Exception as e:
-            print(f"❌ Fehler bei {url}: {e}")
-
-        await browser.close()
-        return found_url
-
-async def process_streams():
-    m3u_lines = ["#EXTM3U"]
-    input_path = Path(INPUT_FILE)
-
-    if not input_path.exists():
-        print(f"❌ Datei nicht gefunden: {INPUT_FILE}")
+def main():
+    if not os.path.exists(INPUT_FILE):
+        print(f"Input file '{INPUT_FILE}' nicht gefunden!")
         return
 
-    with open(input_path, "r", encoding="utf-8") as f:
+    with open(INPUT_FILE, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
+    # Erste zwei Zeilen ignorieren, falls Kommentarzeilen
+    # Oder alle Zeilen, die mit "~~" oder leer sind überspringen
+    channels = []
     for line in lines:
-        if line.strip().startswith("~~") or not line.strip():
+        line = line.strip()
+        if not line or line.startswith("~~"):
             continue
+        parsed = parse_line(line)
+        if parsed:
+            channels.append(parsed)
 
-        try:
-            title, group, logo, url = line.strip().split("|")[:4]
-            title, group, logo, url = title.strip(), group.strip(), logo.strip(), url.strip()
+    if not channels:
+        print("Keine gültigen Kanäle gefunden.")
+        return
 
-            # Nur für Nicht-YouTube/Twitch
-            if "youtube.com" in url or "twitch.tv" in url:
-                continue
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write("#EXTM3U\n")
+        for ch in channels:
+            entry = generate_m3u_entry(ch)
+            f.write(entry + "\n")
 
-            print(f"🌐 Verarbeite: {title} | {url}")
-            m3u8_url = await get_m3u8_url_dynamic(url)
-
-            if m3u8_url:
-                m3u_lines.append(
-                    f'#EXTINF:-1 tvg-id="" tvg-name="{title}" tvg-logo="{logo}" group-title="{group}",{title}'
-                )
-                m3u_lines.append(m3u8_url)
-            else:
-                print(f"⚠️ Keine m3u8-URL gefunden für: {title}")
-
-        except ValueError:
-            print(f"⚠️ Ungültige Zeile übersprungen: {line.strip()}")
-
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as out:
-        out.write("\n".join(m3u_lines))
-
-    print(f"\n✅ m3u-Datei erstellt: {OUTPUT_FILE}")
+    print(f"{len(channels)} Kanäle in '{OUTPUT_FILE}' geschrieben.")
 
 if __name__ == "__main__":
-    asyncio.run(process_streams())
+    main()
