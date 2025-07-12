@@ -1,29 +1,32 @@
-name: Generate M3U Playlist
+name: M3U Generator
 
 on:
+  schedule:
+    - cron: '0-59/10 * * * *'
   workflow_dispatch:
-  push:
-    paths:
-      - 'youtube_channel_info.txt'
-      - 'scripts/youtube_m3ugrabber.py'
-      - '.github/workflows/m3u_Generator.yml'
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Repository auschecken
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
-      - name: 🐍 Python installieren
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
-      - name: 📦 Abhängigkeiten installieren
-        run: |
-          pip install --upgrade pip
-          pip install requests streamlink pyyaml
+      - name: Install dependencies
+        run: pip install pytube requests
 
-      - name: 🧪 M3U generieren
+      - name: Run youtube_m3ugrabber script
         run: python scripts/youtube_m3ugrabber.py
+
+      - name: Git commit and push
+        run: |
+          git config --global user.email "optickal@proton.me"
+          git config --global user.name "Optickal"
+          git add youtube.m3u
+          git diff --cached --quiet || (git commit -m "[bot] - update youtube.m3u" && git push)
