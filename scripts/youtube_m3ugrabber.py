@@ -162,78 +162,121 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 import os
 import re
 import requests
+from datetime import datetime
+from urllib.parse import urlparse
+from pytube import YouTube
 
-M3U_PATH = "youtube.m3u"
 INFO_PATH = "youtube_channel_info.txt"
+M3U_PATH = "youtube.m3u"
+STREAM_TIMEOUT = 8
 
-HEADER = "#EXTM3U\n"
+GROUP_ORDER = ["YouTube", "Twitch", "Webcam", "Radio", "Skyline", "Tomorrowland", "Other"]
 
-def get_stream_url(service, channel_id, resolution="best"):
+def log(msg):
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
+
+def extract_stream_url_youtube(url):
     try:
-        import streamlink
-        if service == "TWITCH":
-            streams = streamlink.streams(f"https://twitch.tv/{channel_id}")
-        elif service == "YOUTUBE":
-            streams = streamlink.streams(f"https://www.youtube.com/@{channel_id}")
-        elif service == "SKYLINE":
-            return f"https://www.skylinewebcams.com/de/webcam/{channel_id}.m3u8"
-        else:
-            return None
-
-        return streams[resolution].url if resolution in streams else list(streams.values())[0].url
+        yt = YouTube(url)
+        stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
+        return stream.url if stream else None
     except Exception as e:
+        log(f"YouTube error for {url}: {e}")
         return None
 
-def sanitize_name(name):
-    return re.sub(r'[^a-zA-Z0-9_]', '_', name)
+def extract_stream_url_twitch(zwickt_url):
+    try:
+        resp = requests.get(zwickt_url, timeout=STREAM_TIMEOUT)
+        return zwickt_url if resp.status_code == 200 else None
+    except:
+        return None
+
+def parse_info_file():
+    channels = []
+    with open(INFO_PATH, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("~~"):
+                continue
+            parts = [x.strip() for x in line.split("|") if x.strip()]
+            if len(parts) < 4:
+                continue
+
+            name, group, logo, stream = parts[:4]
+            options = {}
+
+            for part in parts[4:]:
+                if "=" in part:
+                    key, value = part.split("=", 1)
+                    options[key.strip().upper()] = value.strip()
+
+            channels.append({
+                "name": name,
+                "group": group,
+                "logo": logo,
+                "url": stream,
+                "options": options
+            })
+    return channels
+
+def get_stream_link(entry):
+    url = entry["url"]
+    group = entry["group"]
+    options = entry["options"]
+
+    if "ZWICKT" in options:
+        return extract_stream_url_twitch(options["ZWICKT"])
+
+    if "youtube.com" in url:
+        return extract_stream_url_youtube(url)
+
+    if "twitch.tv" in url:
+        return f"https://twitch.tv/{url.split('/')[-1]}"
+
+    if "skylinewebcams.com" in url:
+        return url
+
+    return None
+
+def write_m3u(groups):
+    with open(M3U_PATH, "w", encoding="utf-8") as f:
+        f.write("#EXTM3U\n\n")
+        for group_name in groups:
+            entries = groups[group_name]
+            if not entries:
+                continue
+            f.write(f"# ---- {group_name} ----\n")
+            for entry in entries:
+                name = entry['name']
+                logo = entry['logo']
+                group = entry['group']
+                stream = entry['stream']
+
+                if stream:
+                    f.write(f'#EXTINF:-1 tvg-id="{name}" tvg-logo="{logo}" group-title="{group}",{name}\n')
+                    f.write(f"{stream}\n")
+            f.write("\n")
 
 def main():
-    if not os.path.exists(INFO_PATH):
-        print("Info-Datei nicht gefunden!")
-        return
+    channels = parse_info_file()
+    grouped = {grp: [] for grp in GROUP_ORDER}
+    grouped["Other"] = []
 
-    with open(INFO_PATH, encoding="utf-8") as f:
-        lines = [line.strip() for line in f if line.strip() and not line.startswith("#")]
+    log(f"Lese {len(channels)} Einträge aus info-Datei...")
 
-    entries = []
-    for line in lines:
-        parts = line.split("|")
-        service = parts[0]
-        channel_id = parts[1]
-        display_name = parts[2]
-        url = parts[3]
-        options = {opt.split("=")[0]: opt.split("=")[1] for opt in parts[4:] if "=" in opt}
+    for entry in channels:
+        name = entry['name']
+        group = entry['group']
+        stream = get_stream_link(entry)
+        entry['stream'] = stream
 
-        group = options.get("GROUP", "Diverses")
-        logo = options.get("LOGO", "")
-        offline_alt = options.get("OFFLINE", display_name)
-        resolution = options.get("RESOLUTION", "best")
-        zwickt_url = options.get("ZWICKT", "")
+        if group not in grouped:
+            grouped["Other"].append(entry)
+        else:
+            grouped[group].append(entry)
 
-        stream_url = get_stream_url(service, channel_id, resolution)
-
-        # Fallback wenn offline
-        if not stream_url and offline_alt:
-            stream_url = f"https://dummy.stream/offline/{sanitize_name(offline_alt)}.ts"
-
-        # Wenn Twitch-Zwickt-Link vorhanden und aktiv, ersetze
-        if service == "TWITCH" and zwickt_url:
-            try:
-                resp = requests.head(zwickt_url, timeout=5)
-                if resp.status_code == 200:
-                    stream_url = zwickt_url
-            except Exception:
-                pass
-
-        if not stream_url:
-            continue
-
-        entries.append(f'#EXTINF:-1 tvg-id="{channel_id}" tvg-name="{display_name}" tvg-logo="{logo}" group-title="{group}",{display_name}\n{stream_url}')
-
-    with open(M3U_PATH, "w", encoding="utf-8") as out:
-        out.write(HEADER + "\n".join(entries))
-
-    print(f"{len(entries)} Einträge generiert in {M3U_PATH}")
+    write_m3u(grouped)
+    log(f"Generierte {M3U_PATH} erfolgreich.")
 
 if __name__ == "__main__":
     main()
