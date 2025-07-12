@@ -30,9 +30,9 @@ https://www.youtube.com/channel/UC7WAqB7dyv1t8jKunD-8krA/live
 #EXTINF:-1 tvg-logo="https://yt3.ggpht.com/ytc/AMLnZu9r8j-7Y5baAiRIB8H85EDlFeyDr97phSHZkbP8iHo=s1024-c-k-c0x00ffffff-no-rj" group-title="Radio",A State Of Trance Radio
 https://www.youtube.com/c/astateoftrance/live
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f8/Jesolostemma.png" group-title="Webcams Italien",Jesolo Strand Live
-https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html
+https://streaming.skylinewebcams.com/jesolo/stream.m3u8
 #EXTINF:-1 tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ17q_wETkr-1fy1dR2wsEHSuSYodE5JkFmSg&usqp=CAU" group-title="Webcams Italien",Marina di Venezia Live
-https://www.marinadivenezia.it/de/live-cam
+https://streaming.skylinewebcams.com/marinadivenezia/stream.m3u8
 #EXTINF:-1 tvg-logo="https://static-cdn.jtvnw.net/jtv_user_pictures/f31a38f2-7cf3-4c38-a198-d50e13bcbbb7-profile_image-300x300.png" group-title="Twitch",Papaplatte
 https://zwickt.stream/twitch/1080p/papaplatte.m3u8
 #EXTINF:-1 tvg-logo="https://static-cdn.jtvnw.net/jtv_user_pictures/7ab6f3d5-dfc9-40d6-8584-c016cd4d3b9e-profile_image-300x300.png" group-title="Twitch",Zarbex
