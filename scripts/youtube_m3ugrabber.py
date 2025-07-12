@@ -159,76 +159,54 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 
-import os
-import re
-import requests
-from bs4 import BeautifulSoup
+import asyncio
+from pathlib import Path
+from playwright.async_api import async_playwright
 
 INPUT_FILE = "youtube_channel_info.txt"
 OUTPUT_FILE = "youtube.m3u"
 
-def parse_line(line):
-    if line.startswith("~~") or not line.strip():
-        return None
-    parts = [p.strip() for p in line.strip().split("|")]
-    if len(parts) < 4:
-        return None
-    return {"name": parts[0], "group": parts[1], "logo": parts[2], "url": parts[3]}
+async def extract_skyline_m3u8_url(playwright, url):
+    browser = await playwright.chromium.launch(headless=True)
+    context = await browser.new_context()
+    page = await context.new_page()
+    await page.goto(url, timeout=60000)
+    await page.wait_for_timeout(5000)
 
-def get_skyline_stream(webcam_page_url):
-    print(f"🔍 Scanne: {webcam_page_url}")
-    try:
-        res = requests.get(webcam_page_url, timeout=10)
-        soup = BeautifulSoup(res.text, 'html.parser')
-        iframe = soup.find("iframe")
-        if not iframe:
-            print("  ❌ Kein iframe gefunden.")
-            return None
-        iframe_src = iframe.get("src")
-        if not iframe_src.startswith("http"):
-            iframe_src = "https:" + iframe_src
+    # Netzwerk-Anfragen analysieren
+    m3u8_url = None
+    for req in page.context.request.finished():
+        if ".m3u8" in req.url and "skylinewebcams.com" in req.url:
+            m3u8_url = req.url
+            break
 
-        # Hole iframe-Inhalt
-        iframe_html = requests.get(iframe_src, timeout=10).text
+    await browser.close()
+    return m3u8_url
 
-        # Suche .m3u8-Link mit Auth-Token
-        m3u8_match = re.search(r'(https://[^"]+\.m3u8\?a=[^"&]+)', iframe_html)
-        if m3u8_match:
-            stream_url = m3u8_match.group(1)
-            print(f"  ✅ Stream gefunden: {stream_url}")
-            return stream_url
-        else:
-            print("  ❌ Kein Stream gefunden.")
-            return None
-    except Exception as e:
-        print(f"  ❌ Fehler beim Abrufen: {e}")
-        return None
-
-def generate_m3u():
-    if not os.path.exists(INPUT_FILE):
-        print(f"❌ Datei '{INPUT_FILE}' nicht gefunden.")
-        return
-
+async def generate_m3u():
     entries = []
-    with open(INPUT_FILE, encoding="utf-8") as f:
-        for line in f:
-            data = parse_line(line)
-            if not data:
-                continue
-            if "skylinewebcams.com" not in data["url"]:
-                continue
-            stream = get_skyline_stream(data["url"])
-            if stream:
-                data["stream"] = stream
-                entries.append(data)
+    async with async_playwright() as p:
+        with open(INPUT_FILE, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("~~") or not line:
+                    continue
+                parts = [x.strip() for x in line.split("|")]
+                if len(parts) < 4:
+                    continue
+                name, group, logo, page_url = parts[:4]
+                m3u8_url = None
+                if "skylinewebcams.com" in page_url:
+                    print(f"Abrufe: {page_url}")
+                    m3u8_url = await extract_skyline_m3u8_url(p, page_url)
+                if m3u8_url:
+                    entries.append((name, group, logo, m3u8_url))
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as out:
         out.write("#EXTM3U\n")
-        for e in entries:
-            out.write(f'#EXTINF:-1 tvg-logo="{e["logo"]}" group-title="{e["group"]}",{e["name"]}\n')
-            out.write(e["stream"] + "\n")
-
-    print(f"\n✅ Fertig. {len(entries)} Streams in '{OUTPUT_FILE}' geschrieben.")
+        for name, group, logo, url in entries:
+            out.write(f'#EXTINF:-1 tvg-logo="{logo}" group-title="{group}",{name}\n')
+            out.write(f'{url}\n')
 
 if __name__ == "__main__":
-    generate_m3u()
+    asyncio.run(generate_m3u())
