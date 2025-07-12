@@ -159,68 +159,81 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 
-from datetime import datetime
-import requests
 import os
-import pytz
+import re
+import requests
 
-# === Konfiguration ===
-OFFLINE_URL = "https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8"
-INPUT_FILE = "youtube_channel_info.txt"
-OUTPUT_FILE = "streams/youtube.m3u"
-M3U_HEADER = '#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"'
+M3U_PATH = "youtube.m3u"
+INFO_PATH = "youtube_channel_info.txt"
 
-# === Uhrzeit DE (Sommer-/Winterzeit korrekt) ===
-def get_time_germany():
-    tz = pytz.timezone("Europe/Berlin")
-    return datetime.now(tz).strftime("%d/%m/%Y %H:%M")
+HEADER = "#EXTM3U\n"
 
-# === m3u8-URL extrahieren ===
-def grab_m3u8(url):
+def get_stream_url(service, channel_id, resolution="best"):
     try:
-        response = requests.get(url, timeout=15).text
-    except:
-        return None
-    if '.m3u8' not in response:
-        return None
-    end = response.find('.m3u8') + 5
-    for tuner in range(100, 500, 10):
-        snippet = response[end - tuner:end]
-        if 'https://' in snippet:
-            start = snippet.find('https://')
-            end_pos = snippet.find('.m3u8') + 5
-            return snippet[start:end_pos]
-    return None
-
-# === Inhalte laden & verarbeiten ===
-entries_youtube, entries_other = [], []
-
-with open(INPUT_FILE, encoding='utf-8') as f:
-    for line in f:
-        line = line.strip()
-        if not line or line.startswith("~~"):
-            continue
-        if not line.startswith("http"):
-            ch_name, grp_title, tvg_logo, tvg_id = [x.strip() for x in line.split("|")]
-            continue
-        url = line
-        m3u8_url = grab_m3u8(url)
-        group = grp_title if m3u8_url else "Offline"
-        stream = m3u8_url if m3u8_url else OFFLINE_URL
-        entry = f'#EXTINF:-1 group-title="{group}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}\n{stream}\n'
-        if grp_title.lower() == "youtube":
-            entries_youtube.append(entry)
+        import streamlink
+        if service == "TWITCH":
+            streams = streamlink.streams(f"https://twitch.tv/{channel_id}")
+        elif service == "YOUTUBE":
+            streams = streamlink.streams(f"https://www.youtube.com/@{channel_id}")
+        elif service == "SKYLINE":
+            return f"https://www.skylinewebcams.com/de/webcam/{channel_id}.m3u8"
         else:
-            entries_other.append(entry)
+            return None
 
-# === .m3u schreiben ===
-os.makedirs("streams", exist_ok=True)
-with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-    f.write(f"{M3U_HEADER}\n")
-    f.write(f'#EXTINF:-1 , Stand - {get_time_germany()}\nhttps://\n\n')
-    f.write("----- YouTube -----\n")
-    f.writelines(entries_youtube)
-    f.write("\n----- Andere -----\n")
-    f.writelines(entries_other)
+        return streams[resolution].url if resolution in streams else list(streams.values())[0].url
+    except Exception as e:
+        return None
 
-print(f"{OUTPUT_FILE} erfolgreich generiert.")
+def sanitize_name(name):
+    return re.sub(r'[^a-zA-Z0-9_]', '_', name)
+
+def main():
+    if not os.path.exists(INFO_PATH):
+        print("Info-Datei nicht gefunden!")
+        return
+
+    with open(INFO_PATH, encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip() and not line.startswith("#")]
+
+    entries = []
+    for line in lines:
+        parts = line.split("|")
+        service = parts[0]
+        channel_id = parts[1]
+        display_name = parts[2]
+        url = parts[3]
+        options = {opt.split("=")[0]: opt.split("=")[1] for opt in parts[4:] if "=" in opt}
+
+        group = options.get("GROUP", "Diverses")
+        logo = options.get("LOGO", "")
+        offline_alt = options.get("OFFLINE", display_name)
+        resolution = options.get("RESOLUTION", "best")
+        zwickt_url = options.get("ZWICKT", "")
+
+        stream_url = get_stream_url(service, channel_id, resolution)
+
+        # Fallback wenn offline
+        if not stream_url and offline_alt:
+            stream_url = f"https://dummy.stream/offline/{sanitize_name(offline_alt)}.ts"
+
+        # Wenn Twitch-Zwickt-Link vorhanden und aktiv, ersetze
+        if service == "TWITCH" and zwickt_url:
+            try:
+                resp = requests.head(zwickt_url, timeout=5)
+                if resp.status_code == 200:
+                    stream_url = zwickt_url
+            except Exception:
+                pass
+
+        if not stream_url:
+            continue
+
+        entries.append(f'#EXTINF:-1 tvg-id="{channel_id}" tvg-name="{display_name}" tvg-logo="{logo}" group-title="{group}",{display_name}\n{stream_url}')
+
+    with open(M3U_PATH, "w", encoding="utf-8") as out:
+        out.write(HEADER + "\n".join(entries))
+
+    print(f"{len(entries)} Einträge generiert in {M3U_PATH}")
+
+if __name__ == "__main__":
+    main()
