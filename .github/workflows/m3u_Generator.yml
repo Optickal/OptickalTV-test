@@ -1,34 +1,36 @@
 name: M3U Generator
 
 on:
-  schedule:
-    - cron: '0 * * * *'   # jede volle Stunde
   workflow_dispatch:
-  pull_request:
-    branches: [main]
+  schedule:
+    - cron: '0 * * * *'  # jede Stunde
 
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install yt-dlp requests streamlink backports.zoneinfo
+          python -m pip install --upgrade pip
+          pip install streamlink
 
-      - name: Run youtube_m3ugrabber script
-        run: python scripts/youtube_m3ugrabber.py
-
-      - name: Git commit and push
+      - name: Run script to generate M3U
         run: |
-          git config --global user.email "optickal@proton.me"
-          git config --global user.name "Optickal"
+          python scripts/youtube_m3ugrabber.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add youtube.m3u
-          git diff --cached --quiet || (git commit -m "[bot] - update youtube.m3u" && git push)
+          git commit -m "M3U automatisch aktualisiert" || echo "Keine Änderungen"
+          git push
