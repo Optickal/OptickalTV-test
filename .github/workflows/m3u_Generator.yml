@@ -55,7 +55,7 @@ jobs:
           python -m playwright install chromium
 
       - name: ▶️ Run Script
-        run: python scripts/m3u8_grabber.py
+        run: python scripts/youtube_m3ugrabber.py
 
       - name: 💾 Commit and push result
         run: |
