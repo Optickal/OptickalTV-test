@@ -160,53 +160,61 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 import asyncio
-from pathlib import Path
 from playwright.async_api import async_playwright
 
-INPUT_FILE = "youtube_channel_info.txt"
-OUTPUT_FILE = "youtube.m3u"
+YOUTUBE_CHANNEL_INFO = "youtube_channel_info.txt"
+OUTPUT_M3U = "youtube.m3u"
 
-async def extract_skyline_m3u8_url(playwright, url):
-    browser = await playwright.chromium.launch(headless=True)
-    context = await browser.new_context()
-    page = await context.new_page()
-    await page.goto(url, timeout=60000)
-    await page.wait_for_timeout(5000)
+async def extract_skyline_m3u8_url(page, page_url):
+    requests = []
 
-    # Netzwerk-Anfragen analysieren
-    m3u8_url = None
-    for req in page.context.request.finished():
-        if ".m3u8" in req.url and "skylinewebcams.com" in req.url:
-            m3u8_url = req.url
-            break
+    def on_request_finished(request):
+        requests.append(request)
 
-    await browser.close()
-    return m3u8_url
+    page.on("requestfinished", on_request_finished)
+
+    await page.goto(page_url)
+    await asyncio.sleep(3)  # Warten, bis die Seite geladen ist und Requests abgeschlossen sind
+
+    # Suche nach .m3u8 URLs in den Requests
+    for req in requests:
+        url = req.url
+        if url.endswith(".m3u8"):
+            return url
+    return None
 
 async def generate_m3u():
-    entries = []
-    async with async_playwright() as p:
-        with open(INPUT_FILE, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith("~~") or not line:
-                    continue
-                parts = [x.strip() for x in line.split("|")]
-                if len(parts) < 4:
-                    continue
-                name, group, logo, page_url = parts[:4]
-                m3u8_url = None
-                if "skylinewebcams.com" in page_url:
-                    print(f"Abrufe: {page_url}")
-                    m3u8_url = await extract_skyline_m3u8_url(p, page_url)
-                if m3u8_url:
-                    entries.append((name, group, logo, m3u8_url))
+    m3u_lines = ["#EXTM3U\n"]
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as out:
-        out.write("#EXTM3U\n")
-        for name, group, logo, url in entries:
-            out.write(f'#EXTINF:-1 tvg-logo="{logo}" group-title="{group}",{name}\n')
-            out.write(f'{url}\n')
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+
+        with open(YOUTUBE_CHANNEL_INFO, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        for line in lines:
+            if line.startswith("~~") or line.strip() == "":
+                continue
+            parts = line.strip().split(" | ")
+            if len(parts) < 4:
+                continue
+            name, group, logo, url = parts[0], parts[1], parts[2], parts[3]
+
+            # Nur Skylinewebcams URLs bearbeiten
+            if "skylinewebcams.com" in url:
+                print(f"Abrufe: {url}")
+                m3u8_url = await extract_skyline_m3u8_url(page, url)
+                if m3u8_url:
+                    m3u_lines.append(f'#EXTINF:-1 tvg-logo="{logo}" group-title="{group}",{name}\n')
+                    m3u_lines.append(m3u8_url + "\n")
+                else:
+                    print(f"Keine m3u8 URL gefunden für {name}")
+
+        await browser.close()
+
+    with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
+        f.writelines(m3u_lines)
 
 if __name__ == "__main__":
     asyncio.run(generate_m3u())
