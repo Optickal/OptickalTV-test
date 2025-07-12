@@ -1,36 +1,66 @@
-name: Update SkylineWebcams m3u
-
+name: Update M3U8
 on:
   schedule:
-    - cron: '0 * * * *'  # Jede Stunde
+    - cron: '0 * * * *' # stündlich
   workflow_dispatch:
 
 jobs:
-  update-m3u:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: 🐍 Install Python & dependencies
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: '3.11'
 
-      - name: Install dependencies
+      - name: 📦 Install Python Requirements
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python -m playwright install --with-deps
 
-      - name: Run m3u generator
-        run: python scripts/youtube_m3ugrabber.py
-
-      - name: Commit and push
+      - name: 🧱 Install system packages for Playwright
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@users.noreply.github.com"
+          sudo apt-get update
+          sudo apt-get install -y \
+            libasound2t64 \
+            libx11-xcb1 \
+            libatk-bridge2.0-0 \
+            libgtk-3-0 \
+            libdrm2 \
+            libgbm1 \
+            libnss3 \
+            libxss1 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxrandr2 \
+            libxcb1 \
+            libxcb-dri3-0 \
+            libxshmfence1 \
+            libxext6 \
+            libxtst6 \
+            libxfixes3 \
+            libegl1 \
+            libwayland-client0 \
+            libwayland-cursor0 \
+            libwayland-egl1 \
+            libffi8 \
+            libopengl0 \
+            libgl1
+
+      - name: 🧪 Install Playwright Browsers
+        run: |
+          python -m playwright install chromium
+
+      - name: ▶️ Run Script
+        run: python scripts/m3u8_grabber.py
+
+      - name: 💾 Commit and push result
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add youtube.m3u
-          git commit -m "🔄 Update m3u with latest SkylineWebcams stream URLs" || echo "No changes"
+          git commit -m "🔄 Update M3U8 file $(date +'%Y-%m-%d %H:%M')" || echo "Nothing to commit"
           git push
