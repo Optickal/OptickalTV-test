@@ -160,13 +160,13 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 import os
-import streamlink
+import requests
 
 INPUT_FILE = "youtube_channel_info.txt"
 OUTPUT_FILE = "youtube.m3u"
+API_ENDPOINT = "https://pwn.sh/api/getstream?url="
 
 def parse_line(line):
-    # Überspringe Kommentarzeilen oder leere Zeilen
     if line.startswith("~~") or not line.strip():
         return None
     parts = line.strip().split("|")
@@ -181,11 +181,12 @@ def parse_line(line):
 
 def get_stream_url(url):
     try:
-        streams = streamlink.streams(url)
-        if streams and "best" in streams:
-            return streams["best"].url
+        resp = requests.get(API_ENDPOINT + requests.utils.quote(url), timeout=10)
+        data = resp.json()
+        if data.get("ok") and data.get("stream_url"):
+            return data["stream_url"]
     except Exception as e:
-        print(f"Fehler bei {url}: {e}")
+        print(f"API error for {url}: {e}")
     return None
 
 def generate_m3u():
@@ -197,25 +198,20 @@ def generate_m3u():
     with open(INPUT_FILE, "r", encoding="utf-8") as f:
         for line in f:
             item = parse_line(line)
-            if item:
-                stream_url = get_stream_url(item["url"])
-                if stream_url:
-                    entries.append({
-                        "name": item["name"],
-                        "group": item["group"],
-                        "logo": item["logo"],
-                        "stream": stream_url
-                    })
-                else:
-                    print(f"Kein aktiver Stream für: {item['name']}")
+            if not item: continue
+            print(f"🔍 Prüfe: {item['name']}")
+            stream = get_stream_url(item["url"])
+            if stream:
+                print(f"✅ OK: {stream}")
+                entries.append({**item, "stream": stream})
+            else:
+                print(f"❌ Kein Stream für {item['name']}")
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write("#EXTM3U\n")
-        for entry in entries:
-            f.write(f'#EXTINF:-1 tvg-logo="{entry["logo"]}" group-title="{entry["group"]}",{entry["name"]}\n')
-            f.write(f"{entry['stream']}\n")
-
-    print(f"{len(entries)} Einträge erfolgreich in {OUTPUT_FILE} geschrieben.")
-
+        for e in entries:
+            f.write(f'#EXTINF:-1 tvg-logo="{e["logo"]}" group-title="{e["group"]}",{e["name"]}\n{e["stream"]}\n')
+    print(f"\n🚀 Fertig! {len(entries)} Einträge in '{OUTPUT_FILE}'.")
+    
 if __name__ == "__main__":
     generate_m3u()
