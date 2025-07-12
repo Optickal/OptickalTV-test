@@ -1,4 +1,6 @@
-#EXTM3U
+#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"
+#EXTINF:-1 Stand - 15:29 Uhr
+https:///clock
 
 # ---- Twitch ----
 
