@@ -166,22 +166,21 @@ YOUTUBE_CHANNEL_INFO = "youtube_channel_info.txt"
 OUTPUT_M3U = "youtube.m3u"
 
 async def extract_skyline_m3u8_url(page, page_url):
-    requests = []
+    m3u8_urls = set()
 
-    def on_request_finished(request):
-        requests.append(request)
+    # Event-Handler, der jeden Request überwacht
+    def on_request(request):
+        url = request.url
+        if url.endswith(".m3u8"):
+            m3u8_urls.add(url)
 
-    page.on("requestfinished", on_request_finished)
+    page.on("request", on_request)
 
     await page.goto(page_url)
-    await asyncio.sleep(3)  # Warten, bis die Seite geladen ist und Requests abgeschlossen sind
+    await asyncio.sleep(5)  # Mehr Zeit geben für alle Requests
 
-    # Suche nach .m3u8 URLs in den Requests
-    for req in requests:
-        url = req.url
-        if url.endswith(".m3u8"):
-            return url
-    return None
+    # Rückgabe der ersten gefundenen m3u8 URL oder None
+    return next(iter(m3u8_urls), None)
 
 async def generate_m3u():
     m3u_lines = ["#EXTM3U\n"]
@@ -201,11 +200,11 @@ async def generate_m3u():
                 continue
             name, group, logo, url = parts[0], parts[1], parts[2], parts[3]
 
-            # Nur Skylinewebcams URLs bearbeiten
             if "skylinewebcams.com" in url:
                 print(f"Abrufe: {url}")
                 m3u8_url = await extract_skyline_m3u8_url(page, url)
                 if m3u8_url:
+                    print(f"Gefunden: {m3u8_url}")
                     m3u_lines.append(f'#EXTINF:-1 tvg-logo="{logo}" group-title="{group}",{name}\n')
                     m3u_lines.append(m3u8_url + "\n")
                 else:
