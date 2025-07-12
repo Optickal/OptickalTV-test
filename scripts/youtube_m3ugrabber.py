@@ -160,60 +160,78 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 import asyncio
+import re
 from playwright.async_api import async_playwright
+from pathlib import Path
 
-YOUTUBE_CHANNEL_INFO = "youtube_channel_info.txt"
-OUTPUT_M3U = "youtube.m3u"
+INPUT_FILE = "youtube_channel_info.txt"
+OUTPUT_FILE = "youtube.m3u"
 
-async def extract_skyline_m3u8_url(page, page_url):
-    m3u8_urls = set()
-
-    # Event-Handler, der jeden Request überwacht
-    def on_request(request):
-        url = request.url
-        if url.endswith(".m3u8"):
-            m3u8_urls.add(url)
-
-    page.on("request", on_request)
-
-    await page.goto(page_url)
-    await asyncio.sleep(5)  # Mehr Zeit geben für alle Requests
-
-    # Rückgabe der ersten gefundenen m3u8 URL oder None
-    return next(iter(m3u8_urls), None)
-
-async def generate_m3u():
-    m3u_lines = ["#EXTM3U\n"]
-
+async def get_m3u8_url_dynamic(url):
     async with async_playwright() as p:
-        browser = await p.chromium.launch()
+        browser = await p.chromium.launch(headless=True)
         page = await browser.new_page()
 
-        with open(YOUTUBE_CHANNEL_INFO, "r", encoding="utf-8") as f:
-            lines = f.readlines()
+        found_url = None
 
-        for line in lines:
-            if line.startswith("~~") or line.strip() == "":
-                continue
-            parts = line.strip().split(" | ")
-            if len(parts) < 4:
-                continue
-            name, group, logo, url = parts[0], parts[1], parts[2], parts[3]
+        async def handle_response(response):
+            nonlocal found_url
+            if ".m3u8" in response.url and response.status == 200:
+                if re.search(r'\.m3u8(\?|$)', response.url):
+                    found_url = response.url
 
-            if "skylinewebcams.com" in url:
-                print(f"Abrufe: {url}")
-                m3u8_url = await extract_skyline_m3u8_url(page, url)
-                if m3u8_url:
-                    print(f"Gefunden: {m3u8_url}")
-                    m3u_lines.append(f'#EXTINF:-1 tvg-logo="{logo}" group-title="{group}",{name}\n')
-                    m3u_lines.append(m3u8_url + "\n")
-                else:
-                    print(f"Keine m3u8 URL gefunden für {name}")
+        page.on("response", handle_response)
+
+        try:
+            await page.goto(url, timeout=60000)
+            await asyncio.sleep(10)
+        except Exception as e:
+            print(f"❌ Fehler bei {url}: {e}")
 
         await browser.close()
+        return found_url
 
-    with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
-        f.writelines(m3u_lines)
+async def process_streams():
+    m3u_lines = ["#EXTM3U"]
+    input_path = Path(INPUT_FILE)
+
+    if not input_path.exists():
+        print(f"❌ Datei nicht gefunden: {INPUT_FILE}")
+        return
+
+    with open(input_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    for line in lines:
+        if line.strip().startswith("~~") or not line.strip():
+            continue
+
+        try:
+            title, group, logo, url = line.strip().split("|")[:4]
+            title, group, logo, url = title.strip(), group.strip(), logo.strip(), url.strip()
+
+            # Nur für Nicht-YouTube/Twitch
+            if "youtube.com" in url or "twitch.tv" in url:
+                continue
+
+            print(f"🌐 Verarbeite: {title} | {url}")
+            m3u8_url = await get_m3u8_url_dynamic(url)
+
+            if m3u8_url:
+                m3u_lines.append(
+                    f'#EXTINF:-1 tvg-id="" tvg-name="{title}" tvg-logo="{logo}" group-title="{group}",{title}'
+                )
+                m3u_lines.append(m3u8_url)
+            else:
+                print(f"⚠️ Keine m3u8-URL gefunden für: {title}")
+
+        except ValueError:
+            print(f"⚠️ Ungültige Zeile übersprungen: {line.strip()}")
+
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as out:
+        out.write("\n".join(m3u_lines))
+
+    print(f"\n✅ m3u-Datei erstellt: {OUTPUT_FILE}")
 
 if __name__ == "__main__":
-    asyncio.run(generate_m3u())
+    asyncio.run(process_streams())
