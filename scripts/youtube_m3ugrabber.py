@@ -164,6 +164,7 @@ from datetime import datetime
 import requests
 import os
 import sys
+import re
 from bs4 import BeautifulSoup
 
 print()
@@ -172,26 +173,26 @@ windows = False
 if 'win' in sys.platform:
     windows = True
 
-# ===== JESOLO-WEBCAM M3U8 GRABBER =====
+# ===== JESOLO-WEBCAM M3U8 GRABBER (mit Token) =====
 def get_jesolo_m3u8():
     jesolo_url = "https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html"
     headers = {"User-Agent": "Mozilla/5.0"}
-    
+
     try:
         resp = requests.get(jesolo_url, headers=headers, timeout=10)
         soup = BeautifulSoup(resp.text, "html.parser")
+
         for script in soup.find_all("script"):
-            if script.string and "live.m3u8" in script.string:
-                start = script.string.find("https://hd-auth.skylinewebcams.com")
-                end = script.string.find(".m3u8", start)
-                if start != -1 and end != -1:
-                    m3u8_url = script.string[start:end+5]
-                    return m3u8_url
+            if script.string:
+                match = re.search(r"https://hd-auth\.skylinewebcams\.com/live\.m3u8\?a=[a-zA-Z0-9]+", script.string)
+                if match:
+                    return match.group(0)
     except Exception as e:
+        print(f"# Fehler beim Holen von Jesolo-Stream: {e}")
         return None
     return None
 
-# Jesolo-Link einfügen
+# ===== JESOLO M3U8-Eintrag =====
 jesolo_stream = get_jesolo_m3u8()
 if jesolo_stream:
     print('#EXTINF:-1 group-title="Webcams" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/69/Jesolo_Beach_icon.png" tvg-id="jesolo.webcam", Jesolo Beach Live')
@@ -200,31 +201,31 @@ else:
     print('#EXTINF:-1 group-title="Webcams", Jesolo Beach (nicht erreichbar)')
     print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
 
-# ===== DEIN BESTEHENDER CODE =====
+# ===== DEIN BESTEHENDER CODE (YT m3u8-Grabber) =====
 def grab(url):
     response = requests.get(url, timeout=15).text
     if '.m3u8' not in response:
+        if windows:
+            print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
+            return
+        os.system(f'curl "{url}" > temp.txt')
+        response = ''.join(open('temp.txt').readlines())
         if '.m3u8' not in response:
-            if windows:
-                print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
-                return
-            os.system(f'curl "{url}" > temp.txt')
-            response = ''.join(open('temp.txt').readlines())
-            if '.m3u8' not in response:
-                print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
-                return
+            print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
+            return
     end = response.find('.m3u8') + 5
     tuner = 100
     while True:
-        if 'https://' in response[end-tuner : end]:
-            link = response[end-tuner : end]
+        if 'https://' in response[end - tuner:end]:
+            link = response[end - tuner:end]
             start = link.find('https://')
             end = link.find('.m3u8') + 5
             break
         else:
             tuner += 5
-    print(f"{link[start : end]}")
+    print(f"{link[start:end]}")
 
+# ===== HEADER FÜR M3U FILE =====
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 
 now = datetime.now()
@@ -232,7 +233,7 @@ dt_string = now.strftime("%d/%m/%Y %H:%M")
 print("#EXTINF:-1 , Stand -", dt_string)
 print("https://")
 
-# ✅ Angepasst: Datei im Root lesen (nicht ../)
+# ===== CHANNEL-INFOS EINLESEN =====
 with open('youtube_channel_info.txt') as f:
     for line in f:
         line = line.strip()
@@ -248,6 +249,9 @@ with open('youtube_channel_info.txt') as f:
         else:
             grab(line)
 
+# ===== TEMPORÄRE DATEIEN ENTFERNEN (wenn nötig) =====
 if 'temp.txt' in os.listdir():
-    os.system('rm temp.txt')
-    os.system('rm watch*')
+    os.remove('temp.txt')
+for file in os.listdir():
+    if file.startswith("watch"):
+        os.remove(file)
