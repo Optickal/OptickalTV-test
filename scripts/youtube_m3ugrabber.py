@@ -158,90 +158,103 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 
+
+
+from datetime import datetime
+import requests
 import os
+import sys
+from bs4 import BeautifulSoup
 
-# Mapping für bekannte Webseiten-URLs zu echten m3u8-Streams
-URL_MAPPING = {
-    "https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html": "https://streaming.skylinewebcams.com/jesolo/stream.m3u8",
-    "https://www.marinadivenezia.it/de/live-cam": "https://streaming.skylinewebcams.com/marinadivenezia/stream.m3u8",
-    # Falls du weitere URLs kennst, ergänze sie hier
-}
+print()
 
-# Pfade zur Eingabe- und Ausgabedatei
-INFO_FILE = "youtube_channel_info.txt"
-OUTPUT_FILE = "youtube.m3u"
+windows = False
+if 'win' in sys.platform:
+    windows = True
+
+# ===== JESOLO-WEBCAM M3U8 GRABBER =====
+def get_jesolo_m3u8():
+    jesolo_url = "https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html"
+    headers = {"User-Agent": "Mozilla/5.0"}
+    
+    try:
+        resp = requests.get(jesolo_url, headers=headers, timeout=10)
+        soup = BeautifulSoup(resp.text, "html.parser")
+        for script in soup.find_all("script"):
+            if script.string and "live.m3u8" in script.string:
+                start = script.string.find("https://hd-auth.skylinewebcams.com")
+                end = script.string.find(".m3u8", start)
+                if start != -1 and end != -1:
+                    m3u8_url = script.string[start:end+5]
+                    return m3u8_url
+    except Exception as e:
+        return None
+    return None
+
+# Jesolo-Link einfügen
+jesolo_stream = get_jesolo_m3u8()
+if jesolo_stream:
+    print('#EXTINF:-1 group-title="Webcams" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/69/Jesolo_Beach_icon.png" tvg-id="jesolo.webcam", Jesolo Beach Live')
+    print(jesolo_stream)
+else:
+    print('#EXTINF:-1 group-title="Webcams", Jesolo Beach (nicht erreichbar)')
+    print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
+
+# ===== DEIN BESTEHENDER CODE =====
+def grab(url):
+    response = requests.get(url, timeout=15).text
+    if '.m3u8' not in response:
+        if '.m3u8' not in response:
+            if windows:
+                print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
+                return
+            os.system(f'curl "{url}" > temp.txt')
+            response = ''.join(open('temp.txt').readlines())
+            if '.m3u8' not in response:
+                print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
+                return
+    end = response.find('.m3u8') + 5
+    tuner = 100
+    while True:
+        if 'https://' in response[end-tuner : end]:
+            link = response[end-tuner : end]
+            start = link.find('https://')
+            end = link.find('.m3u8') + 5
+            break
+        else:
+            tuner += 5
+    print(f"{link[start : end]}")
+
+print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
+
+print(banner1)
+
+print(banner2)
 
 
-def correct_url(url):
-    """
-    Ersetzt ggf. Webseiten-URLs mit echten m3u8-Stream-URLs.
-    """
-    return URL_MAPPING.get(url.strip(), url.strip())
+now = datetime.now()
+dt_string = now.strftime("%d/%m/%Y %H:%M")
+print("#EXTINF:-1 , Stand -", dt_string)
+print("https://")
 
 
-def parse_info_file(filepath):
-    """
-    Liest die Info-Datei ein und gibt eine Liste von Channel-Dictionaries zurück.
-    """
-    channels = []
-    with open(filepath, "r", encoding="utf-8") as f:
-        lines = f.readlines()
-
-    for line in lines:
+with open('../youtube_channel_info.txt') as f:
+    for line in f:
         line = line.strip()
-        if not line or line.startswith("~~") or line.startswith("#"):
-            continue  # Kommentare und leere Zeilen überspringen
-
-        parts = [part.strip() for part in line.split("|")]
-        if len(parts) < 4:
-            print(f"[WARNUNG] Ungültige Zeile wird übersprungen: {line}")
+        if not line or line.startswith('~~'):
             continue
+        if not line.startswith('https:'):
+            line = line.split('|')
+            ch_name = line[0].strip()
+            grp_title = line[1].strip().title()
+            tvg_logo = line[2].strip()
+            tvg_id = line[3].strip()
+            print(f'\n#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
+        else:
+            grab(line)
 
-        name, group, logo, url = parts[:4]
-        url = correct_url(url)
-        channels.append({
-            "name": name,
-            "group": group,
-            "logo": logo,
-            "url": url
-        })
-
-    return channels
-
-
-def generate_m3u(channels):
-    """
-    Erzeugt den M3U-Text aus der Channel-Liste.
-    """
-    m3u_lines = ["#EXTM3U"]
-
-    for ch in channels:
-        entry = (
-            f'#EXTINF:-1 tvg-logo="{ch["logo"]}" group-title="{ch["group"]}",{ch["name"]}\n'
-            f'{ch["url"]}'
-        )
-        m3u_lines.append(entry)
-
-    return "\n".join(m3u_lines)
-
-
-def main():
-    print("[INFO] Starte Generierung der M3U-Datei...")
-
-    if not os.path.exists(INFO_FILE):
-        print(f"[FEHLER] Datei '{INFO_FILE}' nicht gefunden.")
-        return
-
-    channels = parse_info_file(INFO_FILE)
-    m3u_content = generate_m3u(channels)
-
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(m3u_content)
-
-    print(f"[OK] Datei '{OUTPUT_FILE}' wurde erfolgreich erstellt mit {len(channels)} Einträgen.")
-
-
-if __name__ == "__main__":
-    main()
+if 'temp.txt' in os.listdir():
+    os.system('rm temp.txt')
+    os.system('rm watch*')
 
 
