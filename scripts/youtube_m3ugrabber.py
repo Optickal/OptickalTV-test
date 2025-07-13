@@ -164,16 +164,14 @@ from datetime import datetime
 import requests
 import os
 import sys
-import re
 from bs4 import BeautifulSoup
 
-print()
+# Erkennung Windows
+windows = sys.platform.startswith('win')
 
-windows = False
-if 'win' in sys.platform:
-    windows = True
-
-# ===== JESOLO-WEBCAM M3U8 GRABBER (mit Token) =====
+# ====================
+# JESOLO WEBCAM GRABBER
+# ====================
 def get_jesolo_m3u8():
     jesolo_url = "https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html"
     headers = {"User-Agent": "Mozilla/5.0"}
@@ -181,77 +179,85 @@ def get_jesolo_m3u8():
     try:
         resp = requests.get(jesolo_url, headers=headers, timeout=10)
         soup = BeautifulSoup(resp.text, "html.parser")
-
         for script in soup.find_all("script"):
-            if script.string:
-                match = re.search(r"https://hd-auth\.skylinewebcams\.com/live\.m3u8\?a=[a-zA-Z0-9]+", script.string)
-                if match:
-                    return match.group(0)
-    except Exception as e:
-        print(f"# Fehler beim Holen von Jesolo-Stream: {e}")
+            if script.string and "live.m3u8" in script.string:
+                start = script.string.find("https://hd-auth.skylinewebcams.com")
+                end = script.string.find(".m3u8", start)
+                if start != -1 and end != -1:
+                    return script.string[start:end+5]
+    except Exception:
         return None
     return None
 
-# ===== JESOLO M3U8-Eintrag =====
+# Ausgabe: M3U-Kopf
+print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
+
+# Aktueller Timestamp
+now = datetime.now()
+dt_string = now.strftime("%d/%m/%Y %H:%M")
+print(f'#EXTINF:-1 , Stand - {dt_string}')
+print('https://')
+
+# Jesolo-Stream
 jesolo_stream = get_jesolo_m3u8()
 if jesolo_stream:
-    print('#EXTINF:-1 group-title="Webcams" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/6/69/Jesolo_Beach_icon.png" tvg-id="jesolo.webcam", Jesolo Beach Live')
+    print('#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f8/Jesolostemma.png" group-title="Webcams Italien",Jesolo Strand Live')
     print(jesolo_stream)
 else:
-    print('#EXTINF:-1 group-title="Webcams", Jesolo Beach (nicht erreichbar)')
+    print('#EXTINF:-1 group-title="Webcams Italien",Jesolo Beach (nicht erreichbar)')
     print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
 
-# ===== DEIN BESTEHENDER CODE (YT m3u8-Grabber) =====
+# ====================
+# GENERISCHER M3U8 GRABBER
+# ====================
 def grab(url):
-    response = requests.get(url, timeout=15).text
+    try:
+        response = requests.get(url, timeout=15).text
+    except:
+        print("https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8")
+        return
+
     if '.m3u8' not in response:
-        if windows:
-            print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
-            return
-        os.system(f'curl "{url}" > temp.txt')
-        response = ''.join(open('temp.txt').readlines())
-        if '.m3u8' not in response:
-            print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
-            return
+        print("https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8")
+        return
+
     end = response.find('.m3u8') + 5
     tuner = 100
+
     while True:
         if 'https://' in response[end - tuner:end]:
             link = response[end - tuner:end]
             start = link.find('https://')
             end = link.find('.m3u8') + 5
-            break
+            print(link[start:end])
+            return
         else:
             tuner += 5
-    print(f"{link[start:end]}")
+            if tuner > 1000:
+                print("https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8")
+                return
 
-# ===== HEADER FÜR M3U FILE =====
-print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
+# ====================
+# YOUTUBE CHANNEL INFO LADEN
+# ====================
+try:
+    with open('../youtube_channel_info.txt', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith('~~'):
+                continue
+            if not line.startswith('https'):
+                # Name | Gruppe | Logo | ID
+                try:
+                    ch_name, grp_title, tvg_logo, tvg_id = [x.strip() for x in line.split('|')]
+                    print(f'\n#EXTINF:-1 tvg-logo="{tvg_logo}" group-title="{grp_title}" tvg-id="{tvg_id}",{ch_name}')
+                except ValueError:
+                    print(f"#FEHLER: Ungültige Zeile -> {line}")
+            else:
+                grab(line)
+except FileNotFoundError:
+    print("#FEHLER: youtube_channel_info.txt nicht gefunden.")
 
-now = datetime.now()
-dt_string = now.strftime("%d/%m/%Y %H:%M")
-print("#EXTINF:-1 , Stand -", dt_string)
-print("https://")
-
-# ===== CHANNEL-INFOS EINLESEN =====
-with open('youtube_channel_info.txt') as f:
-    for line in f:
-        line = line.strip()
-        if not line or line.startswith('~~'):
-            continue
-        if not line.startswith('https:'):
-            line = line.split('|')
-            ch_name = line[0].strip()
-            grp_title = line[1].strip().title()
-            tvg_logo = line[2].strip()
-            tvg_id = line[3].strip()
-            print(f'\n#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
-        else:
-            grab(line)
-
-# ===== TEMPORÄRE DATEIEN ENTFERNEN (wenn nötig) =====
-if 'temp.txt' in os.listdir():
-    os.remove('temp.txt')
-for file in os.listdir():
-    if file.startswith("watch"):
-        os.remove(file)
+# Aufräumen (nur lokal bei Windows nötig)
+if os.path.exists("temp.txt"):
+    os.remove("temp.txt")
