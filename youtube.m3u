@@ -1,43 +1,129 @@
 #EXTM3U
-#EXTINF:-1 , Stand - 13/07/2025 17:18
+#EXTINF:-1 , Stand - 13/07/2025 19:25
 https://
+
+#EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
+https://
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png" tvg-id="", [COLOR teal] Camping Jesolo International [/COLOR]
+https://hls.youtb.workers.dev/channel/UCDB_gbIJPzzT7xg__hSfqSw.m3u8
+#EXTINF:-1 tvg-name="KroneHitTv" tvg-id="KHTV" group-title="Radio" tvg-logo="https://play-lh.googleusercontent.com/b3UZEQKoQGGXKAXY_qwijvDVDIEqfqJv-nXP1jN-f71WFVSc4aq8ciIpD0O7BWpgD1s",[COLOR yellow] KroneHit TV [/COLOR]
+https://bitcdn-kronehit.bitmovin.com/v2/hls/chunklist_b3128000.m3u8
+#EXTINF:-1 tvg-id="RTL102.5TV.it" tvg-logo="https://raw.githubusercontent.com/Tapiosinn/tv-logos/master/countries/italy/rtl-1025-it.png" group-title="Radio",RTL 102.5 HD
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist_video.m3u8
+
+#EXTINF:-1 tvg-id="RadioCompany.it" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCbyuF3vnqQkKOzY0xFAv3AoDgT24j5EaDTw&usqp=CAU" group-title="Radio",Radio Company TV HD
+https://company.fluid.stream/CompanyTV/smil:Company_ALL.smil/playlist.m3u8
+
+
+
+#EXTINF:-1 tvg-id="R101TV.it" tvg-chno="167" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/r101tv.png" group-title="Radio",R101 TV
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(er)/index.m3u8
+#EXTINF:-1 tvg-id="Radio105TV.it" tvg-chno="66" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radio105tv.png" group-title="Radio",Radio 105 TV
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(ec)/index.m3u8
+#EXTINF:-1 tvg-id="DeejayTV.it" tvg-chno="69" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/deejaytv.png" group-title="Radio",Deejay TV
+https://deejay-tv-lh.akamaized.net/i/DeejayTv_1@129866/master.m3u8
+#EXTINF:-1 tvg-id="RadioItaliaTV.it" tvg-chno="70" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radioitaliatv.png" group-title="Radio",RadioItaliaTV
+https://radioitaliatv-lh.akamaihd.net/i/radioitaliatv_1@329645/master.m3u8
+#EXTINF:-1 tvg-id="RadioKissKiss.it" tvg-chno="158" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiokisskisstv.png" group-title="Radio",RADIO KISS KISS TV
+https://58d921499d3d3.streamlock.net/KissKissTV/KissKissTV.stream/playlist.m3u8
+#EXTINF:-1 tvg-id="R101TV.it" tvg-chno="167" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/r101tv.png" group-title="Radio",R101 TV
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(er)/index.m3u8
+#EXTINF:-1 tvg-id="RaiRadio2.it" tvg-chno="203" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/rairadio2visual.png" group-title="Radio",Rai Radio 2 Visual
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://mediapolis.rai.it/relinker/relinkerServlet.htm?cont=5674080
+#EXTINF:-1 tvg-id="RTL102.5News.it" tvg-chno="233" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/rtl1025tv.png" group-title="Radio",RTL 102.5 News
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S38122967/2lyQRIAAGgRR/playlist_video.m3u8
+#EXTINF:-1 tvg-id="VirginRadio.it" tvg-chno="257" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/virginradiotv.png" group-title="Radio",VIRGIN RADIO
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(ew)/index.m3u8
+#EXTINF:-1 tvg-id="RadioFrecciaTV.it" tvg-chno="258" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiofrecciatv.png" group-title="Radio",RADIOFRECCIA
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S3160845/0tuSetc8UFkF/playlist_video.m3u8
+#EXTINF:-1 tvg-id="rds" tvg-chno="265" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/rdssocialtv.png" group-title="Radio",RDS Social TV
+https://stream.rdstv.radio/out/v1/ec85f72b87f04555aa41d616d5be41dc/index.m3u8
+#EXTINF:-1 tvg-id="RadioZeta.it" tvg-chno="266" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiozetatv.png" group-title="Radio",RADIO ZETA
+https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S9346184/XEx1LqlYbNic/playlist_video.m3u8
+#EXTINF:-1 tvg-id="RadioCapitalTv.it"  tvg-chno="713" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiocapitaltv.png" group-title="Radio",Radio Capital TV
+https://capital_tv-lh.akamaihd.net/i/CapitalTv_1@183098/master.m3u8
+#EXTINF:-1 tvg-id="M2OTv.it" tvg-chno="715" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiom2otv.png" group-title="Radio",M2O TV
+https://m2otv-lh.akamaihd.net/i/m2oTv_1@186074/master.m3u8
+#EXTINF:-1 tvg-id="RadioMontecarlo.it" tvg-chno="772" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/radiomontecarlotv.png" group-title="Radio",Radio Montecarlo TV
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://live2-radio-mediaset-it.akamaized.net/content/hls_h0_clr_vos/live/channel(bb)/index.m3u8
+#EXTINF:-1 tvg-id="RTVSanMarino.it" tvg-chno="831" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/rtvsanmarino.png" group-title="Radio",RTV San Marino
+https://d2hrvno5bw6tg2.cloudfront.net/smrtv-ch01/_definst_/smil:ch-01.smil/chunklist_b1692000_slita.m3u8
+#EXTINF:-1 tvg-name="Ö3-VisualRadio" tvg-id="oe3.at" group-title="Musik" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/radio/hitradiooe3.png",Ö3-VisualRadio
+https://studiocam-oe3.mdn.ors.at/out/u/studiocam_oe3/q6a/manifest.m3u8
+#EXTINF:-1 tvg-name="SWR3-VisualRadio" tvg-id="swr3.de" group-title="Musik" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/radio/swr3.png",SWR3-VisualRadio
+https://swrswr3vr-hls.akamaized.net/hls/live/2018683/swr3vr/master.m3u8
+#EXTINF:-1 tvg-name="DASDING-VisualRadio" tvg-id="Dasding.de" group-title="Musik" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/radio/dasding.png",DASDING-VisualRadio
+https://swrdasdingvr-hls.akamaized.net/hls/live/2018681/dasdingvr/master.m3u8
+
+
+#EXTINF:-1 tvg-name="Oberjoch Webcam" tvg-id="OJ" group-title="Webcam" tvg-logo="https://i.ibb.co/CPfTkDF/Bergbahnen-Hindelang-Oberjoch.png",[COLOR orange] Oberjoch Webcam Test 1[/COLOR]
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://ch-fra-n16.livespotting.com/vpu/d6se1ryf/edlyww6d_720.m3u8?session=eaebeef6-745e-4e4e-8c94-6cfcb3e24ed0
+#EXTINF:-1 tvg-name="Oberjoch Webcam" tvg-id="OJ" group-title="Webcam" tvg-logo="https://i.ibb.co/CPfTkDF/Bergbahnen-Hindelang-Oberjoch.png",[COLOR orange] Oberjoch Webcam Test 2[/COLOR]
+#EXTVLCOPT:http-user-agent=Mozilla/5.0
+https://ch-fra-n16.livespotting.com/vpu/d6se1ryf/edlyww6d.m3u8?
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://www.damuels-mellau.at/bundles/clientwebsite/damuels_mellau/img/damuels_mellau_logo.png",Mellau Rosenstelle
+https://stream.webcam-livestream.at/live/mellaurossstelle/index.m3u8
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://www.damuels-mellau.at/bundles/clientwebsite/damuels_mellau/img/damuels_mellau_logo.png",Mellau Rosenstelle Berg
+https://stream.webcam-livestream.at/live/rossstelleberg/index.m3u8
+
+
+#EXTINF:-1 group-title="Tomorrowland" tvg-logo="https://w7.pngwing.com/pngs/378/394/png-transparent-2018-tomorrowland-tomorrowworld-music-festival-logo-electronic-dance-music-design-purple-heart-logo.png",ONE WORLD TV #1
+https://live-tml.freecaster.com/tomorrowland/96b89f93-ce21-492f-ab98-b56b84247175/96b89f93-ce21-492f-ab98-b56b84247175.isml/96b89f93-ce21-492f-ab98-b56b84247175-stereo=256000-video=5499968.m3u8
+#EXTINF:-1 group-title="Tomorrowland" tvg-logo="https://w7.pngwing.com/pngs/378/394/png-transparent-2018-tomorrowland-tomorrowworld-music-festival-logo-electronic-dance-music-design-purple-heart-logo.png",ONE WORLD TV #2
+https://live-tml.freecaster.com/tomorrowland/96b8a4bc-bc66-4519-9184-9b5d149d2d14/96b8a4bc-bc66-4519-9184-9b5d149d2d14.isml/96b8a4bc-bc66-4519-9184-9b5d149d2d14-stereo=256000-video=5499968.m3u8
+
+
+
+#EXTINF:-1 tvg-name="Sky Radio 101 FM" radio="true" tvg-logo="https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/logos/radio/skyradio101fm.png",Sky Radio 101 FM
+http://playerservices.streamtheworld.com/api/livestream-redirect/SKYRADIO.mp3
+#EXTINF:-1 tvg-name="80s80s Radio" radio="true" tvg-logo="https://static-assets.iamrad.io/80s80s/1648022795461/4c68f9a343fe635641e064a1821bb125.svg",80s80s Radio
+http://streams.80s80s.de/web/mp3-192/streams.80s80s.de/play.m3u
+
+#EXTINF:-1 group-title="TV", ARD HD
+https://mcdn.daserste.de/daserste/de/master.m3u8
+
+
+#EXTINF:-1 group-title="Twitch" tvg-logo="https://scontent-lax3-1.cdninstagram.com/v/t51.2885-15/184761410_264224142070921_752288161223085036_n.jpg?stp=dst-jpg_s200x200&_nc_cat=1&ccb=1-7&_nc_sid=8ae9d6&_nc_ohc=zW3BMrFzKisAX9vSca4&_nc_oc=AQlrjHT1QsIxjNOr5MMqwMhpzyPvecdUufkLR7GwV-r80-ayyfqlmIF7tzZwiyiYVD4&_nc_ht=scontent-lax3-1.cdninstagram.com&oh=00_AfA_VEoVr9bvrz_VpMGlww7sTeHxtrvQaegpdSXhVSELjg&oe=636CDA19",HoneyPuu Twitch [COLOR orange] 720p/60fps [/COLOR]
+https://video-weaver.fra05.hls.ttvnw.net/v1/playlist/CpgEgxoEIkgoOYYx5izEWupyLz_v9DwtHlD9Rjd9245t8dSuCZ8s_IYuQkPPuxfpfD3_VZQQPB2R09g7gi9qf0oW7stBUmYYANnTjfAgqmSiwzE9ctrTeJ9bsCFDLzpIWv74G2RhqpEWcJpEqy08NYz8UvbWl3xpLzdxjRmv8lsFflcn8zS5b99aSUodr0_8uGImJY_FhDnZZZnrAKKo6Ue3Tno8lOLsemVu1PIT4ido4bskaKw5gRuXfs7pL5HKvxSNDJN0y5D0bR5sk9ccOl6Td4yjLk9Jbl1z_UTuhi8r7ocxjSoZYSFasbWHLYa98Gz_3ZFAFlzg1-t2lucA46NHQRBIbdfGZwPhUYOhUh1yo6qCdufJaomZPC50872mliLJSYdWM99HNB7-Wnpbsev6z4yzkDCl1NG4u6sd3bJzMdvoK9UtCjIaQ2nBHTBmroMcUksa_sIdc7vVlYhTB0zCgsLUNWqZA1MmMUmcpS0cNmLV6vzc5HKKvuQUl77NO7kubOMfBy89e1GA9clVkaUglerPbWyKQz_pxOO-htaugdVmGFSLz-Ai4Yr_FfPIK3JIZ_SrPSTeponvOu5KlbdpKtaaTbQyeVbZuClWM95TiAzBkrcEeXqLX9T-rZGgax-KpUmvDgxA-_apJ4aAKR8At5gyceIlNIoiyPQtXgZ6gGlLqYAPXIeVDx34lYrhTaMr9sFH03obYCEaDLfic4zSz0mr1tlRdCABKglldS13ZXN0LTIwiwU.m3u8
+
+#EXTINF:-1 group-title="Twitch" tvg-logo="https://static.wikia.nocookie.net/youtube/images/3/3b/BastiGHG-Neues-Kanallogo.png/revision/latest?cb=20210908235206&path-prefix=de",BastiGHG Twitch [COLOR orange] 720p/60fps [/COLOR]
+https://video-weaver.fra05.hls.ttvnw.net/v1/playlist/CpUEnslHXAdmCEgblSYBSuedA26nqlqPlafQ0HJKHu7XokJJAWVT4KidS7KuLHpjpgcEZvuy_KUJxr_SNv7Ykpa6gusa4YtgBQpaYWVoBXMp4VDwuYgnR382MWy3pPQ53Cr3RFamulHceLBDUUr57LQkQukOxbe-8vpzDV329rO4yAgHpvqyBwtCjMzOuXETkzsTk6af_rK48bOtgU8RBAlgysEDUvnrsC7u341SRGWCjqNJUTRL4g3a-M9tCJ1Ammm_0MFIICScSIMLDzzlNGFcM6b-jsVVCkLGwT5JCkJz3k7dYcRIdq_cfb9RFZ-vcU4rZ_nL7oCPgUEFu7lw-g700uOnB5XK-rGLlcCPuJ2yoNX_kElW2s6qfu1iQW_fYdSK9irxBsca1vcELEbso4hTWZzLYXRPvI2QLxAKKcr7bRzxMX_GN_VOeyXbSS4DL6ntC7cmSthmtFWHWNf4T66ZztlK5nng3pCcelgulobDrzDa0deHk03hBr_uMsQLKyEfNMkyqLa3R5FpNYdtjkMm9sgFbRc4PAEE5vf5Ge9jfUFfSy0Hk0qYeDN47PQd4sVOfkBFbXfi0VdZSDXlIkgrMRkLBykncLknO7r-i31mvgvumjvVV9MuYQnfgcYaIBweAh2HqAHtKx1dBEYaxQJgRmmzdCYXwNv1gtYiQ_hIm_ReH4NAlJSuHy6nAdN5ukdM9bL2J5QaDGbNP6XjBA_kqB7hbyABKglldS13ZXN0LTIwiwU.m3u8
+
+#EXTINF:-1 group-title="Twitch" tvg-logo="",unsympathisch_TV Twitch [COLOR orange] 720p/60fps [/COLOR]
+https://video-weaver.prg03.hls.ttvnw.net/v1/playlist/CpMEc_ZjPyec0IpmtvoPH3LiNLuDPsltIGIPeY2TqoIwTbLwau2XC4m08MrrTzbLBUtWj4532vEJe-vK4KjusZ29bqc_KB4IgBsuoenfTXkHhC_7NRwnIbQQRzrTubbNvRyLqBjcBvmx10JUXWRunu4y5u3z9eV66j6C2KeLjZ1CkmUWHN2cvqtA-mxVtlvujtErUJu77wVIAayUUZE3K2DpoIwa66Ev15_m9rLtSTaJ6eNlt3J4yApIMgCdU7HdVaj8sz1faD9NF5GNaIWjK-I6VJ-WC58DcMMrGIyzADWQymVKWf2xaN0xAhuFGbsA5P7N3yhHuYwn85UPaZ2VwNgoitH7fck3WJiXK5nxWHYu74vHNxi0bsDeihqQPhWXKYK89YwJbfXrasAh1AXvF3dngjstAcqFesCaEQKWAzLDfZkgQUqh6wzhjZwJxZ_mb9-C6DAf_1gAziLzy85kZTTOLMfEgon5fCuTqcbcUZG65mTY5ucmmQQKgHGOvNgk_eDrblwTPrIRpck197hPa0dhgu61sQB69yvWXNIc9DQJzj9qNthchHHn5G1AuxIQxgGB-9NQUPs5bYQXaxdqFQ1K99Ve_KKxneHn_nQm7iy0njKVKfp2D8bMktWrTlpVjeKJDAN-imfXZF1ioP-zv5IRxxuiwCusBOjMsGON9jVpuAr_mVerltc_VQD1EOb_5MNBA1_YGgxKlUydKO98bB6mem8gASoJZXUtd2VzdC0yMIcF.m3u8
+
+#EXTINF:-1 group-title="Airpower" tvg-logo="https://de.m.wikipedia.org/wiki/AirPower#/media/Datei%3AAirpower-Logo.svg",Airpower 2024 Facebook Live
+https://www.facebook.com/video/playback/playlist.m3u8?v=2268751570142407&a=0
+
+#EXTINF:-1 group-title="Airpower" tvg-logo="https://de.m.wikipedia.org/wiki/AirPower#/media/Datei%3AAirpower-Logo.svg",Airpower 2024 Live
+https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_wwwair1592b4_74484_1725685105/hls/1et7l1zj3a7hpl8h.m3u8
+
 #EXTINF:-1 group-title="Webcams Italien",Jesolo Beach (nicht erreichbar)
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
-
-#EXTINF:-1 group-title="Webcam" tvg-logo="https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png" tvg-id="https://www.youtube.com/channel/UCDB_gbIJPzzT7xg__hSfqSw/live",Camping Jesolo International
-
-#EXTINF:-1 group-title="Webcam" tvg-logo="https://www.bodensee.de/extension/portal-bodensee/var/storage/images/media/bibliothek/ausflugsziele/rheinfall/fruehlingsstimmung-am-rheinfall/510453-1-ger-DE/fruehlingsstimmung-am-rheinfall_front_large.jpg" tvg-id="https://www.youtube.com/user/schaffhauserland/live",Rheinfall Schaffhausen
-
-#EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/36YnV9STBqc/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=36YnV9STBqc",The Good Life Radio
-
-#EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/19hKXI1ENrY/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=19hKXI1ENrY",Deep House Radio
-
-#EXTINF:-1 group-title="Webcam" tvg-logo="https://img.youtube.com/vi/AGCX-AKRxRg/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=AGCX-AKRxRg",Bodensee Webcam
-
-#EXTINF:-1 group-title="Tomorrowland" tvg-logo="https://www.livetracklist.com/wp-content/uploads/parookaville-artwork.jpg" tvg-id="https://www.youtube.com/c/ParookavilleTV/live",Parookaville Live
-
-#EXTINF:-1 group-title="Webcam" tvg-logo="https://glassolutions.at/sites/glassolutions.eu/files/styles/photo_gallery_style/public/2019-01/TKTS_1.jpg" tvg-id="https://www.youtube.com/watch?v=1-iS7LArMPA",New York - Time Square Webcam
-
-#EXTINF:-1 group-title="Webcam" tvg-logo="https://img.youtube.com/vi/vvOjJoSEFM0/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=vvOjJoSEFM0",LA - Venice Beach - V Hotel
-
-#EXTINF:-1 group-title="Webcam" tvg-logo="https://img.youtube.com/vi/JZt7FTJmMk4/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=JZt7FTJmMk4",Stuttgart Webcam
-
-#EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/Ehnp6MzX1v4/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=Ehnp6MzX1v4",One World Radio
-
-#EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/2c1RDuDJQNk/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=2c1RDuDJQNk",Trap Flow 1 - Remixes of Popular Songs + EDM
-
-#EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/ym5JzePPWCo/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=ym5JzePPWCo",Trap Flow 2 - Popmusik, EDM & Tanzmusik
-
-#EXTINF:-1 group-title="Radio" tvg-logo="https://img.youtube.com/vi/6Qq2OMFh8Pc/maxresdefault.jpg" tvg-id="https://www.youtube.com/watch?v=6Qq2OMFh8Pc",Trap Nation Radio
-
-#EXTINF:-1 group-title="Webcam" tvg-logo="https://yt3.ggpht.com/JPTXS_Z_SuR0W0aw5OtRN-V1fXOUPRtm2QNqnNEgFhH368VIbv_2N5XR31GrwpmsI65mgBWdAew=s900-c-k-c0x00ffffff-no-rj" tvg-id="https://www.youtube.com/channel/UC7WAqB7dyv1t8jKunD-8krA/live",Los Angeles International Airport Live
-
-#EXTINF:-1 group-title="Radio" tvg-logo="https://yt3.ggpht.com/ytc/AMLnZu9r8j-7Y5baAiRIB8H85EDlFeyDr97phSHZkbP8iHo=s1024-c-k-c0x00ffffff-no-rj" tvg-id="https://www.youtube.com/c/astateoftrance/live",A State Of Trance Radio
-
-#EXTINF:-1 group-title="Webcams Italien" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f8/Jesolostemma.png" tvg-id="https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html",Jesolo Strand Live
-
-#EXTINF:-1 group-title="Webcams Italien" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ17q_wETkr-1fy1dR2wsEHSuSYodE5JkFmSg&usqp=CAU" tvg-id="https://www.marinadivenezia.it/de/live-cam",Marina di Venezia Live
-
-#EXTINF:-1 group-title="Twitch" tvg-logo="https://static-cdn.jtvnw.net/jtv_user_pictures/f31a38f2-7cf3-4c38-a198-d50e13bcbbb7-profile_image-300x300.png" tvg-id="https://zwickt.stream/twitch/1080p/papaplatte.m3u8",Papaplatte
-
-#EXTINF:-1 group-title="Twitch" tvg-logo="https://static-cdn.jtvnw.net/jtv_user_pictures/7ab6f3d5-dfc9-40d6-8584-c016cd4d3b9e-profile_image-300x300.png" tvg-id="https://zwickt.stream/twitch/1080p/zarbex.m3u8",Zarbex
+~~ DO NOT EDIT THE FIRST 2 LINES
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+Camping Jesolo International | Webcam | https://www.visitjesolo.it/sites/default/files/styles/600_360/public/schstr/restyling-logo-comino-01_0.png | https://www.youtube.com/channel/UCDB_gbIJPzzT7xg__hSfqSw/live
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+The Good Life Radio | Radio | https://img.youtube.com/vi/36YnV9STBqc/maxresdefault.jpg | https://www.youtube.com/watch?v=36YnV9STBqc
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+Bodensee Webcam | Webcam | https://img.youtube.com/vi/AGCX-AKRxRg/maxresdefault.jpg | https://www.youtube.com/watch?v=AGCX-AKRxRg
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+New York - Time Square Webcam | Webcam | https://glassolutions.at/sites/glassolutions.eu/files/styles/photo_gallery_style/public/2019-01/TKTS_1.jpg | https://www.youtube.com/watch?v=1-iS7LArMPA
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+Stuttgart Webcam | Webcam | https://img.youtube.com/vi/JZt7FTJmMk4/maxresdefault.jpg | https://www.youtube.com/watch?v=JZt7FTJmMk4
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+Trap Flow 1 - Remixes of Popular Songs + EDM | Radio | https://img.youtube.com/vi/2c1RDuDJQNk/maxresdefault.jpg | https://www.youtube.com/watch?v=2c1RDuDJQNk
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+Trap Nation Radio | Radio | https://img.youtube.com/vi/6Qq2OMFh8Pc/maxresdefault.jpg | https://www.youtube.com/watch?v=6Qq2OMFh8Pc
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+A State Of Trance Radio | Radio | https://yt3.ggpht.com/ytc/AMLnZu9r8j-7Y5baAiRIB8H85EDlFeyDr97phSHZkbP8iHo=s1024-c-k-c0x00ffffff-no-rj | https://www.youtube.com/c/astateoftrance/live
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+Marina di Venezia Live | Webcams Italien | https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ17q_wETkr-1fy1dR2wsEHSuSYodE5JkFmSg&usqp=CAU | https://www.marinadivenezia.it/de/live-cam
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
