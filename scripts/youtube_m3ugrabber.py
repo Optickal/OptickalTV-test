@@ -167,6 +167,8 @@ import sys
 from bs4 import BeautifulSoup
 
 print()
+print(banner1)
+print(banner2)
 
 windows = False
 if 'win' in sys.platform:
@@ -227,9 +229,6 @@ def grab(url):
 
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 
-print(banner1)
-
-print(banner2)
 
 
 now = datetime.now()
