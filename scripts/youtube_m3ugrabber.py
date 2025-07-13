@@ -167,8 +167,7 @@ import sys
 from bs4 import BeautifulSoup
 
 print()
-print(banner1)
-print(banner2)
+
 
 windows = False
 if 'win' in sys.platform:
