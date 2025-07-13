@@ -1,4 +1,5 @@
 name: Update M3U8
+
 on:
   schedule:
     - cron: '0 * * * *' # stündlich
@@ -7,8 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: 📥 Checkout
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
       - name: 🐍 Install Python & dependencies
@@ -54,10 +56,10 @@ jobs:
         run: |
           python -m playwright install chromium
 
-      - name: ▶️ Run Script
+      - name: ▶️ Run Grabber Script
         run: python scripts/youtube_m3ugrabber.py
 
-      - name: 💾 Commit and push result
+      - name: 💾 Commit and Push M3U8 Playlist
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
