@@ -161,6 +161,7 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 
 
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import requests
 import os
 import re
@@ -169,10 +170,10 @@ from bs4 import BeautifulSoup
 output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'youtube.m3u'))
 
 def get_jesolo_m3u8():
-    jesolo_url = "https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html"
+    url = "https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html"
     headers = {"User-Agent": "Mozilla/5.0"}
     try:
-        resp = requests.get(jesolo_url, headers=headers, timeout=10)
+        resp = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(resp.text, "html.parser")
         for script in soup.find_all("script"):
             text = script.string
@@ -202,11 +203,13 @@ def grab(url):
             return snippet
     return 'https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8'
 
+# Schreibe Datei
 with open(output_path, 'w', encoding='utf-8') as m3u:
-    now = datetime.now().strftime("%d/%m/%Y %H:%M")
+    now = datetime.now(tz=ZoneInfo("Europe/Berlin")).strftime("%d/%m/%Y %H:%M")
     m3u.write('#EXTM3U\n')
     m3u.write(f'#EXTINF:-1 , Stand - {now}\n')
-    m3u.write('https://\n')  # Dummy Start-URL
+    m3u.write('https://\n')  # Dummy
+    m3u.write(banner2)
 
     jesolo = get_jesolo_m3u8()
     if jesolo:
@@ -218,19 +221,12 @@ with open(output_path, 'w', encoding='utf-8') as m3u:
 
     try:
         with open(os.path.join(os.path.dirname(__file__), '..', 'youtube_channel_info.txt'), encoding='utf-8') as f:
-            for line in f:
-                line = line.strip()
-                if not line or line.startswith('~~'):
-                    continue
-                if not line.startswith('https'):
-                    parts = [p.strip() for p in line.split('|')]
-                    if len(parts) == 4:
-                        ch_name, group, logo, tvg = parts
-                        m3u.write(f'\n#EXTINF:-1 group-title="{group}" tvg-logo="{logo}" tvg-id="{tvg}",{ch_name}\n')
-                    else:
-                        m3u.write(f"#FEHLER: ungültige Zeile -> {line}\n")
-                else:
-                    stream = grab(line)
-                    m3u.write(f"{stream}\n")
+            lines = [line.strip() for line in f if line.strip()]
+            for i in range(0, len(lines) - 1, 2):
+                extinf = lines[i]
+                url = lines[i + 1]
+                m3u.write(f"{extinf}\n")
+                stream = grab(url)
+                m3u.write(f"{stream}\n")
     except FileNotFoundError:
         m3u.write("#FEHLER: youtube_channel_info.txt nicht gefunden.\n")
