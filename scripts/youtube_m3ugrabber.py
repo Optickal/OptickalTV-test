@@ -168,7 +168,6 @@ from bs4 import BeautifulSoup
 
 print()
 
-
 windows = False
 if 'win' in sys.platform:
     windows = True
@@ -228,15 +227,13 @@ def grab(url):
 
 print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
 
-
-
 now = datetime.now()
 dt_string = now.strftime("%d/%m/%Y %H:%M")
 print("#EXTINF:-1 , Stand -", dt_string)
 print("https://")
 
-
-with open('../youtube_channel_info.txt') as f:
+# ✅ Angepasst: Datei im Root lesen (nicht ../)
+with open('youtube_channel_info.txt') as f:
     for line in f:
         line = line.strip()
         if not line or line.startswith('~~'):
@@ -254,5 +251,3 @@ with open('../youtube_channel_info.txt') as f:
 if 'temp.txt' in os.listdir():
     os.system('rm temp.txt')
     os.system('rm watch*')
-
-
