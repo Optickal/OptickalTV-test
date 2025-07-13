@@ -163,101 +163,74 @@ https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_www
 from datetime import datetime
 import requests
 import os
-import sys
+import re
 from bs4 import BeautifulSoup
 
-# Erkennung Windows
-windows = sys.platform.startswith('win')
+output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'youtube.m3u'))
 
-# ====================
-# JESOLO WEBCAM GRABBER
-# ====================
 def get_jesolo_m3u8():
     jesolo_url = "https://www.skylinewebcams.com/de/webcam/italia/veneto/venezia/spiaggia-di-jesolo.html"
     headers = {"User-Agent": "Mozilla/5.0"}
-
     try:
         resp = requests.get(jesolo_url, headers=headers, timeout=10)
         soup = BeautifulSoup(resp.text, "html.parser")
         for script in soup.find_all("script"):
-            if script.string and "live.m3u8" in script.string:
-                start = script.string.find("https://hd-auth.skylinewebcams.com")
-                end = script.string.find(".m3u8", start)
-                if start != -1 and end != -1:
-                    return script.string[start:end+5]
-    except Exception:
-        return None
+            text = script.string
+            if text and "hd-auth.skylinewebcams.com/live.m3u8" in text:
+                match = re.search(r'https://hd-auth\.skylinewebcams\.com/live\.m3u8\?a=[A-Za-z0-9_-]+', text)
+                if match:
+                    return match.group(0)
+    except Exception as e:
+        print(f"#FEHLER beim Holen von Jesolo-Stream: {e}")
     return None
 
-# Ausgabe: M3U-Kopf
-print('#EXTM3U x-tvg-url="https://telerising.de/epg/easyepg-basic.gz"')
-
-# Aktueller Timestamp
-now = datetime.now()
-dt_string = now.strftime("%d/%m/%Y %H:%M")
-print(f'#EXTINF:-1 , Stand - {dt_string}')
-print('https://')
-
-# Jesolo-Stream
-jesolo_stream = get_jesolo_m3u8()
-if jesolo_stream:
-    print('#EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f8/Jesolostemma.png" group-title="Webcams Italien",Jesolo Strand Live')
-    print(jesolo_stream)
-else:
-    print('#EXTINF:-1 group-title="Webcams Italien",Jesolo Beach (nicht erreichbar)')
-    print('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8')
-
-# ====================
-# GENERISCHER M3U8 GRABBER
-# ====================
 def grab(url):
     try:
-        response = requests.get(url, timeout=15).text
+        resp = requests.get(url, timeout=15)
+        text = resp.text
     except:
-        print("https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8")
-        return
+        return 'https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8'
 
-    if '.m3u8' not in response:
-        print("https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8")
-        return
+    if '.m3u8' not in text:
+        return 'https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8'
 
-    end = response.find('.m3u8') + 5
-    tuner = 100
+    pos = text.find('.m3u8') + 5
+    window = 200
+    for start in range(pos - window, pos):
+        snippet = text[start:pos]
+        if snippet.startswith('https://'):
+            return snippet
+    return 'https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8'
 
-    while True:
-        if 'https://' in response[end - tuner:end]:
-            link = response[end - tuner:end]
-            start = link.find('https://')
-            end = link.find('.m3u8') + 5
-            print(link[start:end])
-            return
-        else:
-            tuner += 5
-            if tuner > 1000:
-                print("https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8")
-                return
+with open(output_path, 'w', encoding='utf-8') as m3u:
+    now = datetime.now().strftime("%d/%m/%Y %H:%M")
+    m3u.write('#EXTM3U\n')
+    m3u.write(f'#EXTINF:-1 , Stand - {now}\n')
+    m3u.write('https://\n')  # Dummy Start-URL
 
-# ====================
-# YOUTUBE CHANNEL INFO LADEN
-# ====================
-try:
-    with open('../youtube_channel_info.txt', encoding='utf-8') as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith('~~'):
-                continue
-            if not line.startswith('https'):
-                # Name | Gruppe | Logo | ID
-                try:
-                    ch_name, grp_title, tvg_logo, tvg_id = [x.strip() for x in line.split('|')]
-                    print(f'\n#EXTINF:-1 tvg-logo="{tvg_logo}" group-title="{grp_title}" tvg-id="{tvg_id}",{ch_name}')
-                except ValueError:
-                    print(f"#FEHLER: Ungültige Zeile -> {line}")
-            else:
-                grab(line)
-except FileNotFoundError:
-    print("#FEHLER: youtube_channel_info.txt nicht gefunden.")
+    jesolo = get_jesolo_m3u8()
+    if jesolo:
+        m3u.write('#EXTINF:-1 group-title="Webcams Italien" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/f/f8/Jesolostemma.png" tvg-id="jesolo.webcam",Jesolo Beach Live\n')
+        m3u.write(f'{jesolo}\n')
+    else:
+        m3u.write('#EXTINF:-1 group-title="Webcams Italien",Jesolo Beach (nicht erreichbar)\n')
+        m3u.write('https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8\n')
 
-# Aufräumen (nur lokal bei Windows nötig)
-if os.path.exists("temp.txt"):
-    os.remove("temp.txt")
+    try:
+        with open(os.path.join(os.path.dirname(__file__), '..', 'youtube_channel_info.txt'), encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith('~~'):
+                    continue
+                if not line.startswith('https'):
+                    parts = [p.strip() for p in line.split('|')]
+                    if len(parts) == 4:
+                        ch_name, group, logo, tvg = parts
+                        m3u.write(f'\n#EXTINF:-1 group-title="{group}" tvg-logo="{logo}" tvg-id="{tvg}",{ch_name}\n')
+                    else:
+                        m3u.write(f"#FEHLER: ungültige Zeile -> {line}\n")
+                else:
+                    stream = grab(line)
+                    m3u.write(f"{stream}\n")
+    except FileNotFoundError:
+        m3u.write("#FEHLER: youtube_channel_info.txt nicht gefunden.\n")
