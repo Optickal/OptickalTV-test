@@ -56,7 +56,7 @@ https://
 https://hls.youtb.workers.dev/channel/UCDB_gbIJPzzT7xg__hSfqSw.m3u8
 #EXTINF:-1 tvg-name="KroneHitTv" tvg-id="KHTV" group-title="Radio" tvg-logo="https://play-lh.googleusercontent.com/b3UZEQKoQGGXKAXY_qwijvDVDIEqfqJv-nXP1jN-f71WFVSc4aq8ciIpD0O7BWpgD1s",[COLOR yellow] KroneHit TV [/COLOR]
 https://bitcdn-kronehit.bitmovin.com/v2/hls/chunklist_b3128000.m3u8
-#EXTINF:-1 tvg-id="RTL102.5TV.it" tvg-logo="https://raw.githubusercontent.com/Tapiosinn/tv-logos/master/countries/italy/rtl-1025-it.png" group-title="Radio",RTL 102.5 HD
+#EXTINF:-1 tvg-id="RTL102.5TV.it" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/RTL_102.5_logo.svg/500px-RTL_102.5_logo.svg.png" group-title="Radio",RTL 102.5 HD
 https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/playlist_video.m3u8
 
 #EXTINF:-1 tvg-id="RadioCompany.it" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCbyuF3vnqQkKOzY0xFAv3AoDgT24j5EaDTw&usqp=CAU" group-title="Radio",Radio Company TV HD
