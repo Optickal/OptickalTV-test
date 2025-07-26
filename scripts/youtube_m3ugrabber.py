@@ -121,6 +121,11 @@ https://stream.webcam-livestream.at/live/mellaurossstelle/index.m3u8
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.damuels-mellau.at/bundles/clientwebsite/damuels_mellau/img/damuels_mellau_logo.png",Mellau Rosenstelle Berg
 https://stream.webcam-livestream.at/live/rossstelleberg/index.m3u8
 
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://magazine.marinadivenezia.it/_next/image?url=https%3A%2F%2Fcms.marinadivenezia.it%2Fuploads%2Fxlarge_Logo_orizzontale_c13de47bd2.png&w=3840&q=75",Marina di Venezia (Pool)
+https://stream1.panocloud.com/marinadivenezia/marinadivenezia.stream/playlist.m3u8
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://magazine.marinadivenezia.it/_next/image?url=https%3A%2F%2Fcms.marinadivenezia.it%2Fuploads%2Fxlarge_Logo_orizzontale_c13de47bd2.png&w=3840&q=75",Marina di Venezia (Strand)
+https://stream1.panocloud.com/marinadivenezia2/marinadivenezia2.stream/playlist.m3u8
+
 
 #EXTINF:-1 group-title="Tomorrowland" tvg-logo="https://w7.pngwing.com/pngs/378/394/png-transparent-2018-tomorrowland-tomorrowworld-music-festival-logo-electronic-dance-music-design-purple-heart-logo.png",ONE WORLD TV #1
 https://live-tml.freecaster.com/tomorrowland/96b89f93-ce21-492f-ab98-b56b84247175/96b89f93-ce21-492f-ab98-b56b84247175.isml/96b89f93-ce21-492f-ab98-b56b84247175-stereo=256000-video=5499968.m3u8
