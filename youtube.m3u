@@ -1,5 +1,5 @@
 #EXTM3U
-#EXTINF:-1 , Stand - 26/07/2025 16:15
+#EXTINF:-1 , Stand - 26/07/2025 17:14
 https://
 
 #EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
@@ -72,6 +72,11 @@ https://ch-fra-n16.livespotting.com/vpu/d6se1ryf/edlyww6d.m3u8?
 https://stream.webcam-livestream.at/live/mellaurossstelle/index.m3u8
 #EXTINF:-1 group-title="Webcam" tvg-logo="https://www.damuels-mellau.at/bundles/clientwebsite/damuels_mellau/img/damuels_mellau_logo.png",Mellau Rosenstelle Berg
 https://stream.webcam-livestream.at/live/rossstelleberg/index.m3u8
+
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://magazine.marinadivenezia.it/_next/image?url=https%3A%2F%2Fcms.marinadivenezia.it%2Fuploads%2Fxlarge_Logo_orizzontale_c13de47bd2.png&w=3840&q=75",Marina di Venezia (Pool)
+https://stream1.panocloud.com/marinadivenezia/marinadivenezia.stream/playlist.m3u8
+#EXTINF:-1 group-title="Webcam" tvg-logo="https://magazine.marinadivenezia.it/_next/image?url=https%3A%2F%2Fcms.marinadivenezia.it%2Fuploads%2Fxlarge_Logo_orizzontale_c13de47bd2.png&w=3840&q=75",Marina di Venezia (Strand)
+https://stream1.panocloud.com/marinadivenezia2/marinadivenezia2.stream/playlist.m3u8
 
 
 #EXTINF:-1 group-title="Tomorrowland" tvg-logo="https://w7.pngwing.com/pngs/378/394/png-transparent-2018-tomorrowland-tomorrowworld-music-festival-logo-electronic-dance-music-design-purple-heart-logo.png",ONE WORLD TV #1
