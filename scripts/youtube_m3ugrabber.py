@@ -61,8 +61,8 @@ https://dd782ed59e2a4e86aabf6fc508674b59.msvdn.net/live/S97044836/tbbP8T1ZRPBL/p
 
 #EXTINF:-1 tvg-id="RadioCompany.it" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCbyuF3vnqQkKOzY0xFAv3AoDgT24j5EaDTw&usqp=CAU" group-title="Radio",Radio Company TV HD
 https://company.fluid.stream/CompanyTV/smil:Company_ALL.smil/playlist.m3u8
-
-
+#EXTINF:-1 tvg-id="RadioWOW.it" tvg-logo="https://www.phonostar.de/images/auto_created/radio_wow_italien2184x184.png" group-title="Radio",Radio WOW TV HD
+https://5e73cf528f404.streamlock.net/RadioWOW/livestream/playlist.m3u8
 
 #EXTINF:-1 tvg-id="R101TV.it" tvg-chno="167" tvg-logo="https://cdn.jsdelivr.net/gh/Tundrak/IPTV-Italia/logos/r101tv.png" group-title="Radio",R101 TV
 #EXTVLCOPT:http-user-agent=Mozilla/5.0
