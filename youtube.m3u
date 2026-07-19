@@ -1,5 +1,5 @@
 #EXTM3U
-#EXTINF:-1 , Stand - 19/07/2026 17:54
+#EXTINF:-1 , Stand - 19/07/2026 17:59
 https://
 
 #EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
@@ -149,4 +149,6 @@ https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 #EXTINF:-1 group-title="Twitch" tvg-logo="https://static-cdn.jtvnw.net/jtv_user_pictures/f31a38f2-7cf3-4c38-a198-d50e13bcbbb7-profile_image-300x300.png",Papaplatte
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
 #EXTINF:-1 group-title="Twitch" tvg-logo="https://static-cdn.jtvnw.net/jtv_user_pictures/7ab6f3d5-dfc9-40d6-8584-c016cd4d3b9e-profile_image-300x300.png",Zarbex
+https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
+#EXTINF:-1 group-title="Lollapalooza 2026 Live" tvg-logo="https://share.google/images/Mv2nhYLZ9MXj6JQMx",Lollapalooza 2026 Live
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
