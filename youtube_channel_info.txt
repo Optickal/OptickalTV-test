@@ -36,3 +36,6 @@ https://www.marinadivenezia.it/de/live-cam
 https://zwickt.stream/twitch/1080p/papaplatte.m3u8
 #EXTINF:-1 group-title="Twitch" tvg-logo="https://static-cdn.jtvnw.net/jtv_user_pictures/7ab6f3d5-dfc9-40d6-8584-c016cd4d3b9e-profile_image-300x300.png",Zarbex
 https://zwickt.stream/twitch/1080p/zarbex.m3u8
+
+#EXTINF:-1 group-title="Lollapalooza 2026 Live" tvg-logo="https://share.google/images/Mv2nhYLZ9MXj6JQMx",Lollapalooza 2026 Live
+https://svc42.main.sl.t-online.de/bpk-tv/mm001_hd/HLS_CMAF/index.m3u8
