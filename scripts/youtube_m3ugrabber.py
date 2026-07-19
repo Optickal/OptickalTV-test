@@ -158,6 +158,9 @@ https://www.facebook.com/video/playback/playlist.m3u8?v=2268751570142407&a=0
 #EXTINF:-1 group-title="Airpower" tvg-logo="https://de.m.wikipedia.org/wiki/AirPower#/media/Datei%3AAirpower-Logo.svg",Airpower 2024 Live
 https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_wwwair1592b4_74484_1725685105/hls/1et7l1zj3a7hpl8h.m3u8
 
+#EXTINF:-1 group-title="Lollapalooza 2026 Live" tvg-logo="https://share.google/images/Mv2nhYLZ9MXj6JQMx",Lollapalooza 2026 Live
+https://svc42.main.sl.t-online.de/bpk-tv/mm001_hd/HLS_CMAF/index.m3u8
+
 '''
 
 
