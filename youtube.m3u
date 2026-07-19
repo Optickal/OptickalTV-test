@@ -1,5 +1,5 @@
 #EXTM3U
-#EXTINF:-1 , Stand - 19/07/2026 17:59
+#EXTINF:-1 , Stand - 19/07/2026 18:01
 https://
 
 #EXTINF:-1 tvg-logo="https://scontent-atl3-1.cdninstagram.com/v/t51.2885-19/105937352_265914024481562_7622129429491260210_n.jpg?stp=dst-jpg_s320x320&_nc_ht=scontent-atl3-1.cdninstagram.com&_nc_cat=102&_nc_ohc=zf11R_EmFHsAX_MSb9q&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT8B_Bu6PSKwIOBvOvRtIPCTOSvILccpgTaAsLRNRcH3mg&oe=6242D5FA&_nc_sid=7bff83",[COLOR green] [B] Marvins Playlist [/B] [/COLOR]
@@ -109,6 +109,9 @@ https://www.facebook.com/video/playback/playlist.m3u8?v=2268751570142407&a=0
 
 #EXTINF:-1 group-title="Airpower" tvg-logo="https://de.m.wikipedia.org/wiki/AirPower#/media/Datei%3AAirpower-Logo.svg",Airpower 2024 Live
 https://egress-stkpl568letoqb1mdwrq0.live.streamer.wpstream.net/ev_wps_54054_wwwair1592b4_74484_1725685105/hls/1et7l1zj3a7hpl8h.m3u8
+
+#EXTINF:-1 group-title="Lollapalooza 2026 Live" tvg-logo="https://share.google/images/Mv2nhYLZ9MXj6JQMx",Lollapalooza 2026 Live
+https://svc42.main.sl.t-online.de/bpk-tv/mm001_hd/HLS_CMAF/index.m3u8
 
 #EXTINF:-1 group-title="Webcams Italien",Jesolo Beach (nicht erreichbar)
 https://raw.githubusercontent.com/Optickal/OptickalTV-test/main/assets/info.m3u8
